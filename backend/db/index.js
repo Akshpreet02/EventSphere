@@ -34,19 +34,10 @@ const eventSchema = new mongoose.Schema({
   }]
 });
 
-const bookingSchema = new mongoose.Schema({
-    event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    booking_date: { type: Date, required: true },
-    ticket_quantity: { type: Number, required: true }
-});
-
 const User = mongoose.model('User', userSchema);
 const Event = mongoose.model('Event', eventSchema);
-const Booking = mongoose.model('Booking', bookingSchema);
 
 module.exports = {
     User,
     Event,
-    Booking
 }
