@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package example;
+
+service ExampleMessageOneWay {
+
+    rpc OneWayMessage (ExampleMessageRequest) returns (stream ExampleMessageResponse) {}
+    
+}
+
+message ExampleMessageRequest {
+    repeated string Message = 1;
+}
+
+message ExampleMessageResponse {
+    string message = 1;
+}
