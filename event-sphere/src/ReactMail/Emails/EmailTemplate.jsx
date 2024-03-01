@@ -9,9 +9,15 @@ import {
   Link,
   Preview,
 } from "@react-email/components";
-import "./EventConfirmEmail.css";
-
-const EventConfirmEmail = ({
+import "./EmailTemplate.css";
+/**
+ * @param {string} name - Name of the Recipient
+ * @param {string} email - Email of Recipient
+ * @returns {Promise<number>} c - what the program returns with type
+ * @description A template example of what the format for an email is
+ * you must use a .jsx file
+ */
+const EmailTemplate = ({
   name = "Steve the Great Bug",
   email = "example@ucalgary.ca",
 }) => {
@@ -48,4 +54,4 @@ const containerStyle = {
   maxWidth: "100%",
 };
 
-export default EventConfirmEmail;
+export default EmailTemplate;

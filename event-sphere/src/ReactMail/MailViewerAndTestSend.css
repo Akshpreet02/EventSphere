@@ -1,0 +1,11 @@
+#Form h1 {
+  margin: 0px;
+}
+#Form form {
+  display: flex;
+  flex-direction: column;
+}
+
+#Form form input {
+  margin-top: 5px;
+}
