@@ -1,33 +1,32 @@
-
-const init = () => {
-    
+const init = function() {
     const grpc = require('@grpc/grpc-js');
     const protoLoader = require('@grpc/proto-loader');
-    const protoPath = "../service.proto";
-
-
-    const packageDefinition = protoLoader.loadSync(protoPath, {
-        keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true,
+    const PROTO_PATH = __dirname +'/salary.proto';
+  
+    const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
+      keepCase: true,
+      longs: String,
+      enums: String,
+      defaults: true,
+      oneofs: true,
+      
     });
-
-    let exampleMessageProto = grpc.loadPackageDefinition(packageDefinition).example;
-
-
-    const main = () => {
-        const client = new exampleMessageProto.Example('X.X.X.X:XXXX', grpc.credentials.createInsecure());
-        
-        let exampleMessage = "Hello Server";
-
-        client.OneWayMessage({exampleMessage: exampleMessage}, function(err, response) {
-            console.log('Data:' response);
-            console.log(err);
-        });
-
+  
+    let employee_proto = grpc.loadPackageDefinition(packageDefinition).employee;
+  
+    let { paySalary } = require('./pay_salary.js');
+  
+    function main() {
+   
+      let server = new grpc.Server();
+      server.bindAsync('0.0.0.0:4500', grpc.ServerCredentials.createInsecure(),()=>{
+        server();
+      });
+      server.addService(employee_proto.Employee.service, { paySalary: paySalary });
+  
     }
+  
     main();
-}
-exports.init = init;
+    
+  }
+  exports.init = init;
