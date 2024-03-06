@@ -1,7 +1,7 @@
 /* event-card.module.css */
 
 .eventCard {
-    width: 500px;
+    width: auto;
     border: solid black 2px;
     border-radius: 5px;
     padding: 10px;
