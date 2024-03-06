@@ -2,7 +2,7 @@ const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
 // Load the protobuf
-const PROTO_PATH = './service.proto';
+const PROTO_PATH = './gRPC/service.proto';
 const packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
     {
