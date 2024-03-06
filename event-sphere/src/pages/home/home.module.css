@@ -1,0 +1,23 @@
+.home {
+    padding: 10px;
+    margin: 10px;
+    border: solid black 1px;
+}
+
+.home h1 {
+    padding-left: 30px;
+}
+
+.home input {
+    padding-right: 30px;
+    height: 50px;
+}
+
+.eventlist {
+    border-top: solid black 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+}
