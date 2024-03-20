@@ -1,10 +1,6 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const mongoose = require('mongoose');
-const { User, Event } = require('./models');
-
-// MongoDB Connection
-mongoose.connect('mongodb+srv://admin:LYDHCmW2RrFiaWW7@cluster0.kw0emyr.mongodb.net/EventSphere', { useNewUrlParser: true, useUnifiedTopology: true });
+const { User, Event } = require('./db');
 
 // Load the protobuf
 const PROTO_PATH = './gRPC/service.proto';
