@@ -34,7 +34,7 @@ message FetchUsersRequest {
     // the flexibility of extending the API in the future.
 }
 
-message User {
+message Users {
     string id = 1;
     string username = 2;
     string email = 3;
@@ -44,7 +44,7 @@ message User {
   
   
 message FetchUsersResponse {
-    repeated User users = 1; // Repeated field for a list of users
+    repeated Users users = 1; // Repeated field for a list of users
 }
 
 message CustomerRegistrationRequest {

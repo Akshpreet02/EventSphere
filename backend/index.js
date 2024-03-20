@@ -1,8 +1,22 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const { User, Event } = require('./db');
+const { Users, Event } = require('./db');
 
 // Load the protobuf
+async function fetchAllUsers() {
+    console.log("function run");
+    try {
+        const users = await Users.find();
+        console.log("Got the following users:", users);
+        return users;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+fetchAllUsers();
+
 const PROTO_PATH = './gRPC/service.proto';
 const packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
@@ -16,9 +30,10 @@ const packageDefinition = protoLoader.loadSync(
 const exampleProto = grpc.loadPackageDefinition(packageDefinition).EventSphere;
 
 // Implement the service methods
+
 const fetchUsers = async (call, callback) => {
     try {
-        const users = await User.find({});
+        const users = await Users.find({});
         
         const responseUsers = users.map(user => ({
             id: user._id.toString(),
@@ -27,6 +42,7 @@ const fetchUsers = async (call, callback) => {
             full_name: user.full_name,
             role: user.role,
         }));
+        console.log(responseUsers);
         
         callback(null, { users: responseUsers });
     } catch (error) {
@@ -111,7 +127,7 @@ server.addService(exampleProto.EventService.service, {
 });
 
 // Specify the server port
-const PORT = 50051;
+const PORT = 4000;
 server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (error, port) => {
     if (error) {
         console.error(error);

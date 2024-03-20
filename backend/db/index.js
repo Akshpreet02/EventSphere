@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin:LYDHCmW2RrFiaWW7@cluster0.kw0emyr.mongodb.net/EventSphere');
 
 const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    full_name: { type: String, required: true },
-    role: { type: String, required: true, enum: ['organizer', 'attendee'] }
+    username: String,
+    // password: { type: String, required: true },
+    email: String,
+    full_name: String,
+    role: String
 });
   
 const eventSchema = new mongoose.Schema({
@@ -34,10 +34,10 @@ const eventSchema = new mongoose.Schema({
   }]
 });
 
-const User = mongoose.model('User', userSchema);
+const Users = mongoose.model('Users', userSchema);
 const Event = mongoose.model('Event', eventSchema);
 
 module.exports = {
-    User,
+    Users,
     Event,
 }
