@@ -1,8 +1,6 @@
+// import { render } from "@react-email/components";
 import { Resend } from "resend";
-
-const key = "re_geV67eqa_NRrozrvPrUzFu9caRrf79w3p";
-
-const resend = new Resend("re_bzsYtb4U_J5SwBcWr1r11miMyRh6NqN87");
+import EmailTemplate from "./EmailTemplateTest.js";
 
 /**
  * @param {string} name - Name of the Recipient
@@ -12,37 +10,34 @@ const resend = new Resend("re_bzsYtb4U_J5SwBcWr1r11miMyRh6NqN87");
  * @param {React.JSX.Element} - The email you want to send missing no parts
  * @returns {emails} email - sneds email to specified email address from brock's domain
  * @description Sends emails by Resend given all this info
- * @todo - fix this pos I dont understand why it doesnt work
+ * @todo - fix this I dont understand why it doesnt work
  */
-const SendMail = async (
-  emailSendTo,
-  name,
-  subjectToSend,
-  rawText,
-  emailToSend
-) => {
-  console.log({ emailSendTo, name, subjectToSend, rawText, emailToSend }); //more debug testng
+const SendMail = async () =>
+	// 	emailSendTo,
+	// 	name,
+	// 	subjectToSend,
+	// 	rawText,
+	// 	emailToSend
+	{
+		const emailSendTo = "darkicewolf50@gmail.com";
+		const name = "Brock";
+		const subjectToSend = "Test Mail";
+		const rawText = "Nothing here to see";
+		const emailToSend = EmailTemplate(name, emailSendTo);
+		console.log({ emailSendTo, subjectToSend, rawText, emailToSend }); //more debug testng
 
-  const res = await resend.emails.send({
-    from: "brock@eatsleepski.com", //cannot change without more money
-    to: emailSendTo,
-    subject: subjectToSend,
-    html: <h1>Hello</h1>, //debug testing
-    react: emailToSend,
-    text: rawText,
-  });
+		const resend = new Resend("re_H7Z8ekze_AFGPKA29ZrBarMxfeEFsy6y3");
 
-  if (res.data) {
-    return new Response(JSON.stringify({ message: res.data }), {
-      status: 200,
-      statusText: "OK",
-    });
-  } else {
-    return new Response(JSON.stringify({ message: res.error }), {
-      status: 500,
-      statusText: "Internal Server Error",
-    });
-  }
-};
+		const { res, error } = await resend.emails.send({
+			from: "valid@eatsleepski.com", //cannot change without more money
+			to: emailSendTo,
+			subject: subjectToSend,
+			html: render(emailToSend, { pretty: true }),
+			text: rawText,
+		});
+		await console.log(error);
+
+		await console.log(res);
+	};
 
 export default SendMail;
