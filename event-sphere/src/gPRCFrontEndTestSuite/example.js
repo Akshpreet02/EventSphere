@@ -1,5 +1,0 @@
-//import grpc;
-
-const main = () => {
-    
-}
