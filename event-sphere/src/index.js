@@ -2,37 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css'
 import App from './app';
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./Header/Header";
-import Home from "./Home/Home";
-import Browse from "./Browse/Browse";
-import "./index.css";
-// import ExampleGRPC from "./gPRCFrontEndTestSuite/ExampleGRPC";
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-	<React.StrictMode>
-		<BrowserRouter>
-			<Routes>
-				<Route element={<Header />}>
-					<Route
-						path="/"
-						element={<Home />}></Route>
-					<Route
-						path="/Browse"
-						element={<Browse />}></Route>
-					{/* <Route
-						path="/ExampleGRPC"
-						element={<ExampleGRPC />}></Route> */}
-				</Route>
-			</Routes>
-		</BrowserRouter>
-	</React.StrictMode>
 );
