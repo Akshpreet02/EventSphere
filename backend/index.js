@@ -16,6 +16,24 @@ const packageDefinition = protoLoader.loadSync(
 const exampleProto = grpc.loadPackageDefinition(packageDefinition).EventSphere;
 
 // Implement the service methods
+const fetchUsers = async (call, callback) => {
+    try {
+        const users = await User.find({});
+        
+        const responseUsers = users.map(user => ({
+            id: user._id.toString(),
+            username: user.username,
+            email: user.email,
+            full_name: user.full_name,
+            role: user.role,
+        }));
+        
+        callback(null, { users: responseUsers });
+    } catch (error) {
+        callback(error);
+    }
+};
+
 const registerCustomer = async (call, callback) => {
     try {
         const user = new User(call.request);
@@ -88,7 +106,8 @@ server.addService(exampleProto.EventService.service, {
     PostEvent: postEvent,
     FetchEvents: fetchEvents,
     EditEvent: editEvent,
-    DeleteEvent: deleteEvent
+    DeleteEvent: deleteEvent,
+    FetchUsers: fetchUsers
 });
 
 // Specify the server port
@@ -99,5 +118,4 @@ server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (er
         return;
     }
     console.log(`Server running at http://0.0.0.0:${PORT}`);
-    server.start();
 });
