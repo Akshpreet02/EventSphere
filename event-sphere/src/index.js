@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css'
+import App from './app';
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -7,6 +11,11 @@ import Browse from "./Browse/Browse";
 import "./index.css";
 // import ExampleGRPC from "./gPRCFrontEndTestSuite/ExampleGRPC";
 
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
