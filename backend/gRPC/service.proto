@@ -24,9 +24,29 @@ service EventService {
     
     // Deleting an event
     rpc DeleteEvent (DeleteEventRequest) returns (DeleteEventResponse) {}
+
+    rpc FetchUsers (FetchUsersRequest) returns (FetchUsersResponse) {}
 }
 
-// Request and response messages
+// Request and response message
+message FetchUsersRequest {
+    // This request is intentionally left empty to illustrate
+    // the flexibility of extending the API in the future.
+}
+
+message User {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string full_name = 4;
+    string role = 5;
+}
+  
+  
+message FetchUsersResponse {
+    repeated User users = 1; // Repeated field for a list of users
+}
+
 message CustomerRegistrationRequest {
     string username = 1;
     string password = 2;
