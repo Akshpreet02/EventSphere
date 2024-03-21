@@ -12,6 +12,7 @@ import Event from './pages/event/Event';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
+  console.log("in the app component")
   return (
     <Router>
       <div>
@@ -29,7 +30,7 @@ function App() {
         <Footer />
       </div>
     </Router>
-  );
+  )
 }
 
 export default App;

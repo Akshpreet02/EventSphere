@@ -8,7 +8,7 @@ router.get("/getEvents", async(req, res) => {
     const events = await Event.find();
 
     res.status(200).json({
-        "Events": events
+        "events": events
     })
 })
 

@@ -16,7 +16,7 @@ app.use((err, req, res, next) => {   //global catch to prevent showing backend l
     res.status(500).send('Something broke!'); // Send a generic error message
 });
 
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
