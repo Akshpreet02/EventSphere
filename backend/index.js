@@ -1,137 +1,22 @@
-const grpc = require('@grpc/grpc-js');
-const protoLoader = require('@grpc/proto-loader');
-const { Users, Event } = require('./db');
+const express = require("express");
+const bodyParser = require('body-parser');
+const app = express();
+const cors = require("cors");
 
-// Load the protobuf
-async function fetchAllUsers() {
-    console.log("function run");
-    try {
-        const users = await Users.find();
-        console.log("Got the following users:", users);
-        return users;
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
+const eventRouter = require("./routes/event")
+const userRouter = require("./routes/user")
 
-fetchAllUsers();
+app.use(express.json());
+app.use(cors());  //make sure you have this before you hit your routes using the app.use(router logic stuff)
+app.use("/event", eventRouter)
+app.use("/user", userRouter)
 
-const PROTO_PATH = './gRPC/service.proto';
-const packageDefinition = protoLoader.loadSync(
-    PROTO_PATH,
-    {
-        keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true
-    });
-const exampleProto = grpc.loadPackageDefinition(packageDefinition).EventSphere;
-
-// Implement the service methods
-
-const fetchUsers = async (call, callback) => {
-    try {
-        const users = await Users.find({});
-        
-        const responseUsers = users.map(user => ({
-            id: user._id.toString(),
-            username: user.username,
-            email: user.email,
-            full_name: user.full_name,
-            role: user.role,
-        }));
-        console.log(responseUsers);
-        
-        callback(null, { users: responseUsers });
-    } catch (error) {
-        callback(error);
-    }
-};
-
-const registerCustomer = async (call, callback) => {
-    try {
-        const user = new User(call.request);
-        const savedUser = await user.save();
-        callback(null, { message: `Customer registered successfully with ID: ${savedUser.id}` });
-    } catch (error) {
-        callback(error);
-    }
-};
-
-const registerEventPoster = async (call, callback) => {
-    try {
-        // Ensure role is set to organizer or similar
-        call.request.role = 'organizer'; // Forcing role to ensure correct type
-        const user = new User(call.request);
-        const savedUser = await user.save();
-        callback(null, { message: `Event poster registered successfully with ID: ${savedUser.id}` });
-    } catch (error) {
-        callback(error);
-    }
-};
-
-const postEvent = async (call, callback) => {
-    try {
-        const event = new Event(call.request);
-        const savedEvent = await event.save();
-        callback(null, { message: `Event posted successfully with ID: ${savedEvent.id}` });
-    } catch (error) {
-        callback(error);
-    }
-};
-
-const fetchEvents = async (call) => {
-    try {
-        const events = await Event.find({});
-        events.forEach(event => {
-            call.write(event);
-        });
-        call.end();
-    } catch (error) {
-        call.end(error);
-    }
-};
-
-const editEvent = async (call, callback) => {
-    try {
-        const { event_id, ...updateData } = call.request;
-        const updatedEvent = await Event.findByIdAndUpdate(event_id, updateData, { new: true });
-        callback(null, { message: `Event with ID: ${updatedEvent.id} updated successfully` });
-    } catch (error) {
-        callback(error);
-    }
-};
-
-const deleteEvent = async (call, callback) => {
-    try {
-        const { event_id } = call.request;
-        await Event.findByIdAndDelete(event_id);
-        callback(null, { message: `Event with ID: ${event_id} deleted successfully` });
-    } catch (error) {
-        callback(error);
-    }
-};
-
-// Define the gRPC server
-const server = new grpc.Server();
-server.addService(exampleProto.EventService.service, {
-    RegisterCustomer: registerCustomer,
-    RegisterEventPoster: registerEventPoster,
-    PostEvent: postEvent,
-    FetchEvents: fetchEvents,
-    EditEvent: editEvent,
-    DeleteEvent: deleteEvent,
-    FetchUsers: fetchUsers
+app.use((err, req, res, next) => {   //global catch to prevent showing backend logic to the frontend
+    console.error(err.stack); // Log error stack for debugging
+    res.status(500).send('Something broke!'); // Send a generic error message
 });
 
-// Specify the server port
-const PORT = 4000;
-server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (error, port) => {
-    if (error) {
-        console.error(error);
-        return;
-    }
-    console.log(`Server running at http://0.0.0.0:${PORT}`);
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

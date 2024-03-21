@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     full_name: String,
     role: String
 });
-  
+
 const eventSchema = new mongoose.Schema({
   event_name: { type: String, required: true },
   description: { type: String },
@@ -34,10 +34,10 @@ const eventSchema = new mongoose.Schema({
   }]
 });
 
-const Users = mongoose.model('Users', userSchema);
+const User = mongoose.model('User', userSchema);
 const Event = mongoose.model('Event', eventSchema);
 
 module.exports = {
-    Users,
+    User,
     Event,
 }
