@@ -4,6 +4,7 @@ import styles from './create.module.css';
 
 function Create() {
   const [eventName, setEventName] = useState('');
+  const [error, setError] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -19,12 +20,43 @@ function Create() {
     setImageFile(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Temporary
-    console.log('Form submitted:', { eventName, eventLocation, startTime, endTime, eventDescription, requireRSVP, imageFile });
+    console.log('Form submitted:', { eventName, eventDescription, startTime, endTime, startDate, endDate, eventLocation, status, requireRSVP }); 
 
-  };
+    const newEvent = {
+      event_name: eventName,
+      description: eventDescription,
+      start_time: startTime,
+      end_time: endTime,
+      start_date: startDate.split('-').reverse().join(''), // Adjust date format if necessary
+      end_date: endDate.split('-').reverse().join(''), // Adjust date format if necessary
+      venue: eventLocation,
+      organizer: '65fb86bd147225803d1db49b', // Replace with actual organizer ID
+      status: status,
+      time_zone: 'UTC', // If you have a timezone state, use that
+      invitations: [], // Replace with actual invitations array if applicable
+      rsvp_required: requireRSVP,
+      RSVPs: [], // Initialize as empty or with actual data if available
+      reviews: [] // Initialize as empty or with actual data if available
+    };
+
+    try {
+      console.log("trying to hit backend", newEvent)
+      const response = await fetch("http://localhost:3001/event/addEvent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newEvent),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error adding todo');
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  }
 
   return (
     <div className={styles.create}>

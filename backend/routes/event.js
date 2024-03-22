@@ -21,12 +21,15 @@ router.post("/addEvent", async (req, res) => {
         await Event.create({
             event_name: payLoad.event_name,
             description: payLoad.description,
+            start_time: payLoad.start_time,
+            end_time: payLoad.end_time,
             start_date: new Date(payLoad.start_date),
             end_date: new Date(payLoad.end_date),
             venue: payLoad.venue,
             organizer: payLoad.organizer, // This expects an ObjectId of the User
             status: payLoad.status,
             invitations: payLoad.invitations, // Array of User ObjectId
+            rsvp_required: payLoad.rsvp_required,
             RSVPs: payLoad.RSVPs.map(rsvp => ({
                 user: rsvp.user, // ObjectId of the User
                 status: rsvp.status
