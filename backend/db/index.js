@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
 const eventSchema = new mongoose.Schema({
   event_name: { type: String, required: true },
   description: { type: String },
+  start_time: { type: String, required: true },
+  end_time: { type: String, required: true },
   start_date: { type: Date, required: true },
   end_date: { type: Date, required: true },
   venue: { type: String, required: true },
@@ -23,6 +25,7 @@ const eventSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
+  rsvp_required: { type: Boolean },
   RSVPs: [{
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     status: { type: String, enum: ['accepted', 'declined', 'pending'] }

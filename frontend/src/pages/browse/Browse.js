@@ -3,22 +3,7 @@ import styles from './browse.module.css';
 import EventCard from '../../components/event-card/EventCard';
 import { Link } from 'react-router-dom';
 
-const allevents = [
-  {
-    title: "Event 1",
-    image: "event1.jpg",
-    date: "08/01/2029",
-    location: "Location",
-    id: "1"
-  },
-  {
-    title: "Event 2",
-    image: "event2.jpg",
-    date: "05/12/2024",
-    location: "Location",
-    id: "2"
-  }
-];
+
 
 function Browse() {
   return (

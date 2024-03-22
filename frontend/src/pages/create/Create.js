@@ -4,12 +4,15 @@ import styles from './create.module.css';
 
 function Create() {
   const [eventName, setEventName] = useState('');
-  const [eventLocation, setEventLocation] = useState('');
-  const [eventTime, setEventTime] = useState('');
   const [eventDescription, setEventDescription] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [eventLocation, setEventLocation] = useState('');
+  const [status, setStatus] = useState('planning'); // Default status
   const [requireRSVP, setRequireRSVP] = useState(false);
-  const [receiveNotification, setReceiveNotification] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -19,7 +22,7 @@ function Create() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Temporary
-    console.log('Form submitted:', { eventName, eventLocation, eventTime, eventDescription, requireRSVP, receiveNotification, imageFile });
+    console.log('Form submitted:', { eventName, eventLocation, startTime, endTime, eventDescription, requireRSVP, imageFile });
 
   };
 
@@ -39,8 +42,13 @@ function Create() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="eventTime">Event Time:</label>
-          <input type="datetime-local" id="eventTime" name="eventTime" value={eventTime} onChange={(e) => setEventTime(e.target.value)} required />
+          <label htmlFor="startTime">Event Time:</label>
+          <input type="datetime-local" id="startTime" name="startTime" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="endTime">Event Time:</label>
+          <input type="datetime-local" id="endTime" name="endTime" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
         </div>
 
         <div className={styles.formGroup}>
@@ -48,17 +56,49 @@ function Create() {
           <textarea id="eventDescription" name="eventDescription" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} required></textarea>
         </div>
 
-        <div className={styles.checkboxGroup}>
-          <label>
-            Require RSVP:
-            <input type="checkbox" checked={requireRSVP} onChange={() => setRequireRSVP(!requireRSVP)} />
-          </label>
+        <div className={styles.formGroup}>
+          <label htmlFor="description">Event Description:</label>
+          <textarea id="description" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} required></textarea>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="startTime">Start Time:</label>
+          <input type="text" id="startTime" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="endTime">End Time:</label>
+          <input type="text" id="endTime" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="startDate">Start Date:</label>
+          <input type="date" id="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="endDate">End Date:</label>
+          <input type="date" id="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="location">Venue:</label>
+          <input type="text" id="location" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} required />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="status">Status:</label>
+          <select id="status" value={status} onChange={(e) => setStatus(e.target.value)} required>
+            <option value="planning">Planning</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+          </select>
         </div>
 
         <div className={styles.checkboxGroup}>
           <label>
-            Receive Notification:
-            <input type="checkbox" checked={receiveNotification} onChange={() => setReceiveNotification(!receiveNotification)} />
+            Require RSVP:
+            <input type="checkbox" checked={requireRSVP} onChange={() => setRequireRSVP(!requireRSVP)} />
           </label>
         </div>
 
