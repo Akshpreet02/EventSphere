@@ -1,6 +1,7 @@
 // Create.js
 import React, { useState } from 'react';
 import styles from './create.module.css';
+import axios from'axios';
 
 function Create() {
   const [eventName, setEventName] = useState('');
@@ -13,12 +14,17 @@ function Create() {
   const [eventLocation, setEventLocation] = useState('');
   const [status, setStatus] = useState('planning'); // Default status
   const [requireRSVP, setRequireRSVP] = useState(false);
-  const [imageFile, setImageFile] = useState();
+  // const [imageFile, setImageFile] = useState();
+  const [file, setFile] = useState()
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setImageFile(file);
-  };
+  const handleUpload = (e) => {
+    console.log(file);
+  }
+
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   setImageFile(file);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,42 +71,42 @@ function Create() {
 
         <div className={styles.formGroup}>
           <label htmlFor="eventName">Event Name:</label>
-          <input type="text" id="eventName" name="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} required />
+          <input type="text" id="eventName" name="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} />
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="eventDescription">Event Description:</label>
-          <textarea id="eventDescription" name="eventDescription" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} required></textarea>
+          <textarea id="eventDescription" name="eventDescription" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} ></textarea>
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="startTime">Start Time:</label>
-          <input type="time" id="startTime" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+          <input type="time" id="startTime" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="endTime">End Time:</label>
-          <input type="time" id="endTime" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
+          <input type="time" id="endTime" value={endTime} onChange={(e) => setEndTime(e.target.value)}  />
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="startDate">Start Date:</label>
-          <input type="date" id="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+          <input type="date" id="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="endDate">End Date:</label>
-          <input type="date" id="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+          <input type="date" id="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="location">Venue:</label>
-          <input type="text" id="location" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} required />
+          <input type="text" id="location" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)}  />
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="status">Status:</label>
-          <select id="status" value={status} onChange={(e) => setStatus(e.target.value)} required>
+          <select id="status" value={status} onChange={(e) => setStatus(e.target.value)} >
             <option value="planning">Planning</option>
             <option value="active">Active</option>
             <option value="completed">Completed</option>
@@ -118,6 +124,11 @@ function Create() {
           <label htmlFor="imageFile">Upload Image:</label>
           <input type="file" id="imageFile" name="imageFile" accept="image/*" onChange={handleFileChange} required />
         </div> */}
+
+        <div className={styles.formGroup}>
+          <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+          <button onClick={handleUpload}>Upload Image</button>
+        </div>
 
         <button type="submit" className={styles.createButton}>Create Event</button>
         
