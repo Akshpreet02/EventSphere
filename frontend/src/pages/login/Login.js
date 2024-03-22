@@ -15,13 +15,34 @@ function Login() {
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Temporary
     console.log('Username:', username);
     console.log('Password:', password);
 
+    const credentials = {
+      "username": username,
+      "password": password
+    }
+
+    try {
+      const response = await fetch("http://localhost:3001/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newEvent),
+      })
+
+      if(!response.ok) {
+        throw new Error('Error checking for user');
+      }
+
+    } catch(err) {
+      console.log(err.message);
+    }
+
+    //making it empty
     setUsername('');
     setPassword('');
   };

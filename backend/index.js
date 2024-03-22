@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const cors = require("cors");
 const multer = require("multer");
-const User = require("./models/User");
+const { Event } = require("./db/index.js");
+const mongoose = require('mongoose');
 
 const eventRouter = require("./routes/event")
 const userRouter = require("./routes/user")
@@ -29,7 +30,8 @@ const upload = multer({
 });
 
 app.post('/upload', upload.single('file'), (req, res) => {
-    User.create({image: req.file.filename})
+    console.log(req.file.filename)
+    Event.create({image: req.file.filename})
     .then(result => res.json(result))
     .catch(err => console.log(err))
 })
