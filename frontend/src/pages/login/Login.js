@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import styles from './login.module.css';
 import { UserContext } from "../../UserContext.jsx";
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { setIsLoggedIn } = useContext(UserContext);
+  const navigate = useNavigate(); // Hook to get the navigate function
 
   // Update login values
   const handleUsernameChange = (e) => {
@@ -52,6 +54,7 @@ function Login() {
 
     if(data && (data.userFound == true)) {
       setIsLoggedIn(true);
+      navigate('/myevents');
     } else {
       setIsLoggedIn(false);
       alert("Incorrect Username or Password! Please try again.");
