@@ -5,20 +5,15 @@ function EventCard({ event }) {
   console.log("in event card");
 
   function formatDate(dateString) {
-    // Check if dateString is in 'DDMMYYYY' format
     if (/^\d{8}$/.test(dateString)) {
-      // Parse the string
       const day = dateString.substring(0, 2);
       const month = dateString.substring(2, 4);
       const year = dateString.substring(4, 8);
       
-      // Construct a new Date object
       const date = new Date(`${year}-${month}-${day}T00:00:00Z`);
       
-      // Options for the output
       const options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
       
-      // Convert the Date object to a readable string
       return date.toLocaleDateString(undefined, options);
     } else {
       return 'Invalid Date';
