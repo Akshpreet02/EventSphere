@@ -22,6 +22,11 @@ function EventCard({ event }) {
   
   return (
     <div className={styles.eventCard}>
+      {event.image_url && (
+        <div className={styles.eventImage}>
+          <img src={event.image_url} alt={event.event_name} />
+        </div>
+      )}
       <div className={styles.eventInfo}>
         <h2>{event.event_name}</h2>
         <p>Start Date: {formatDate(event.start_date)}</p>

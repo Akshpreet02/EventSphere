@@ -15,15 +15,16 @@ function Create() {
   const [status, setStatus] = useState('planning'); // Default status
   const [requireRSVP, setRequireRSVP] = useState(false);
   // const [imageFile, setImageFile] = useState();
-  const [file, setFile] = useState()
+  // const [file, setFile] = useState()
+  const [imageUrl, setImageUrl] = useState('');
 
-  const handleUpload = (e) => {
-    const formdata = new FormData();
-    formdata.append('file', file)
-    axios.post('http://localhost:3001/upload', formdata)
-    .then(res => {console.log(res)})
-    .catch(err => {console.log(err)})
-  }
+  // const handleUpload = (e) => {
+  //   const formdata = new FormData();
+  //   formdata.append('file', file)
+  //   axios.post('http://localhost:3001/upload', formdata)
+  //   .then(res => {console.log(res)})
+  //   .catch(err => {console.log(err)})
+  // }
 
   // const handleFileChange = (e) => {
   //   const file = e.target.files[0];
@@ -33,7 +34,7 @@ function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Temporary
-    console.log('Form submitted:', { eventName, eventDescription, startTime, endTime, startDate, endDate, eventLocation, status, requireRSVP }); 
+    console.log('Form submitted:', { eventName, eventDescription, startTime, endTime, startDate, endDate, eventLocation, status, imageUrl, requireRSVP }); 
 
     const newEvent = {
       event_name: eventName,
@@ -45,6 +46,7 @@ function Create() {
       venue: eventLocation,
       organizer: '65fb86bd147225803d1db49b', // Replace with actual organizer ID
       status: status,
+      image_url: imageUrl,
       time_zone: 'UTC', // If you have a timezone state, use that
       invitations: [], // Replace with actual invitations array if applicable
       rsvp_required: requireRSVP,
@@ -129,9 +131,14 @@ function Create() {
           <input type="file" id="imageFile" name="imageFile" accept="image/*" onChange={handleFileChange} required />
         </div> */}
 
-        <div className={styles.formGroup}>
+        {/* <div className={styles.formGroup}>
           <input type="file" onChange={(e) => setFile(e.target.files[0])} />
           <button onClick={handleUpload}>Upload Image</button>
+        </div> */}
+
+        <div className={styles.formGroup}>
+          <label htmlFor="imageUrl">Image URL:</label>
+          <input type="text" id="imageUrl" name="imageUrl" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
         </div>
 
         <button type="submit" className={styles.createButton}>Create Event</button>
