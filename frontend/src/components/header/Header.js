@@ -6,12 +6,20 @@ import { Link } from 'react-router-dom';
 import { UserContext } from "../../UserContext.jsx";
 import { useContext } from 'react';
 import Logo from "./logo.webp";
+import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
-    const { isLoggedIn } = useContext(UserContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const navigate = useNavigate(); // Hook to get the navigate function
 
     console.log("Logged in? ",isLoggedIn)
+
+    const handleLogout = () => {
+      console.log('User logged out');
+      setIsLoggedIn(false);
+      navigate('/');
+    }
 
     return (
       <div className={styles.header}>
@@ -43,6 +51,7 @@ const Header = () => {
                           <u>My Events</u>
                         </li>
                       </Link>
+                      <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
                     </ul>
                   </div>
               </li>

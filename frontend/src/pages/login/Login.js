@@ -1,5 +1,5 @@
 // Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './login.module.css';
 import { UserContext } from "../../UserContext.jsx";
 import { useContext } from 'react';
@@ -9,7 +9,12 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { setIsLoggedIn } = useContext(UserContext);
+  const { userID, setUserID } = useContext(UserContext);
   const navigate = useNavigate(); // Hook to get the navigate function
+
+  useEffect(() => {
+    console.log("userID has changed to:", userID);
+  }, [userID]); // Dependency array with userID
 
   // Update login values
   const handleUsernameChange = (e) => {
@@ -42,7 +47,7 @@ function Login() {
       })
       //parsing the response object
       data = await response.json();
-      console.log("The response is: ", data.userFound)
+      console.log("The response is: ", data.id)
 
       if(!response.ok) {
         throw new Error('Error checking for user');
@@ -54,6 +59,7 @@ function Login() {
 
     if(data && (data.userFound == true)) {
       setIsLoggedIn(true);
+      setUserID(data.id);
       navigate('/myevents');
     } else {
       setIsLoggedIn(false);
