@@ -11,7 +11,7 @@ import Logo from "./logo.webp";
 const Header = () => {
     const { isLoggedIn } = useContext(UserContext);
 
-    console.log(isLoggedIn)
+    console.log("Logged in? ",isLoggedIn)
 
     return (
       <div className={styles.header}>

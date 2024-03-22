@@ -23,8 +23,8 @@ router.post("/addEvent", async (req, res) => {
             description: payLoad.description,
             start_time: payLoad.start_time,
             end_time: payLoad.end_time,
-            start_date: new Date(payLoad.start_date),
-            end_date: new Date(payLoad.end_date),
+            start_date: payLoad.start_date,
+            end_date: payLoad.end_date,
             venue: payLoad.venue,
             organizer: payLoad.organizer, // This expects an ObjectId of the User
             status: payLoad.status,
@@ -38,7 +38,8 @@ router.post("/addEvent", async (req, res) => {
                 reviewer: review.reviewer, // ObjectId of the User
                 review: review.review,
                 rating: review.rating
-            }))
+            })),
+            image_url: payLoad.image
         });
 
         res.status(200).json({

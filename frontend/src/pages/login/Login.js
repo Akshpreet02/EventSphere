@@ -1,10 +1,13 @@
 // Login.js
 import React, { useState } from 'react';
 import styles from './login.module.css';
+import { UserContext } from "../../UserContext.jsx";
+import { useContext } from 'react';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { setIsLoggedIn } = useContext(UserContext);
 
   // Update login values
   const handleUsernameChange = (e) => {
@@ -27,12 +30,17 @@ function Login() {
       "password": password
     }
 
+    let data;
+
     try {
       const response = await fetch("http://localhost:3001/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newEvent),
+        body: JSON.stringify(credentials),
       })
+      //parsing the response object
+      data = await response.json();
+      console.log("The response is: ", data.userFound)
 
       if(!response.ok) {
         throw new Error('Error checking for user');
@@ -42,6 +50,14 @@ function Login() {
       console.log(err.message);
     }
 
+    if(data && (data.userFound == true)) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+      alert("Incorrect Username or Password! Please try again.");
+    }
+
+    
     //making it empty
     setUsername('');
     setPassword('');
