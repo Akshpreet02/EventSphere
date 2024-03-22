@@ -34,7 +34,8 @@ const eventSchema = new mongoose.Schema({
     reviewer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     review: { type: String },
     rating: { type: Number, min: 1, max: 5 }
-  }]
+  }],
+  image: { type: String }
 });
 
 const User = mongoose.model('User', userSchema);
