@@ -30,5 +30,25 @@ router.post("/addUser", async(req, res) => {
     })
 })
 
+router.post('/login', async (req, res) => {
+    console.log("validating user credentials")
+
+    const payLoad = req.body;
+    const user = await User.findOne({
+        username: payLoad.username,
+        password: payLoad.password
+    })
+
+    if(user) {
+        res.status(200).json({
+            "userFound": true
+        })
+    } else {
+        res.status(200).json({
+            "userFound": false
+        })
+    }
+})
+
 module.exports = router;
 
