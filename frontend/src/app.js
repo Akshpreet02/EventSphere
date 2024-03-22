@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './components/header/Header';
+import { UserContextProvider } from './UserContext';
 import Home from './pages/home/Home';
 import Browse from './pages/browse/Browse';
 import Create from './pages/create/Create';
@@ -14,6 +15,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   console.log("in the app component")
   return (
+    <UserContextProvider>
     <Router>
       <div>
         <Header />
@@ -30,6 +32,8 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </UserContextProvider>
+    
   )
 }
 

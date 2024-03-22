@@ -3,8 +3,14 @@
 import React from 'react';
 import styles from './header.module.css';
 import { Link } from 'react-router-dom';
+import { UserContext } from "../../UserContext.jsx";
+import { useContext } from 'react';
 
 const Header = () => {
+    const { isLoggedIn } = useContext(UserContext);
+
+    console.log(isLoggedIn)
+
     return (
       <div className={styles.header}>
         <div className={styles.logo}>Logo</div>
@@ -25,28 +31,39 @@ const Header = () => {
                 Create
               </li>
             </Link>
-            <li className={styles.dropdown}>
-              <div className={styles.list}>
-              Account
-                  <ul className={styles.dropdownContent}>
-                    <Link to='/myevents'>
-                      <li className={styles.list}>
-                        <u>My Events</u>
-                      </li>
-                    </Link>
-                    <Link to='/login'>
-                      <li className={styles.list}>
-                        <u>Login</u>
-                      </li>
-                    </Link>
-                    <Link to='/signup'>
-                      <li className={styles.list}>
-                        <u>Signup</u>
-                      </li>
-                    </Link>
-                  </ul>
-                </div>
-            </li>
+            {!!isLoggedIn && (
+              <li className={styles.dropdown}>
+                <div className={styles.list}>
+                Account
+                    <ul className={styles.dropdownContent}>
+                      <Link to='/myevents'>
+                        <li className={styles.list}>
+                          <u>My Events</u>
+                        </li>
+                      </Link>
+                    </ul>
+                  </div>
+              </li>
+            )}
+            {!isLoggedIn && (
+              <li className={styles.dropdown}>
+                <div className={styles.list}>
+                Account
+                    <ul className={styles.dropdownContent}>
+                      <Link to='/login'>
+                        <li className={styles.list}>
+                          <u>Login</u>
+                        </li>
+                      </Link>
+                      <Link to='/signup'>
+                        <li className={styles.list}>
+                          <u>Sign Up</u>
+                        </li>
+                      </Link>
+                    </ul>
+                  </div>
+              </li> 
+            )}
           </ul>
         </div>
       </div>
