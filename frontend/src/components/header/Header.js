@@ -5,6 +5,8 @@ import styles from './header.module.css';
 import { Link } from 'react-router-dom';
 import { UserContext } from "../../UserContext.jsx";
 import { useContext } from 'react';
+import Logo from "./logo.webp";
+
 
 const Header = () => {
     const { isLoggedIn } = useContext(UserContext);
@@ -13,7 +15,7 @@ const Header = () => {
 
     return (
       <div className={styles.header}>
-        <div className={styles.logo}>Logo</div>
+        <div><img className={styles.logo} src={Logo} alt='logo'></img></div>
         <div className={styles.nav}>
           <ul>
             <Link to='/' className={styles.list}>
