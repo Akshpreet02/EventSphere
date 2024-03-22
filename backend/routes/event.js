@@ -12,6 +12,23 @@ router.get("/getEvents", async(req, res) => {
     })
 })
 
+router.get("/getUserEvents", async (req, res) => {
+    try {
+        const { userID } = req.query;
+
+        console.log(userID)
+
+        const userEvents = await Event.find({ organizer: userID });
+
+        res.status(200).json({
+            "userEvents": userEvents
+        });
+    } catch(error) {
+        console.error("Error fetching user events:", error);
+        res.status(500).json({ message: "Error fetching events for user." });
+    }
+})
+
 router.post("/addEvent", async (req, res) => {
     console.log("Posting event to backend");
 
