@@ -37,38 +37,18 @@ function Create() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="eventLocation">Event Location:</label>
-          <input type="text" id="eventLocation" name="eventLocation" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} required />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="startTime">Event Time:</label>
-          <input type="datetime-local" id="startTime" name="startTime" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="endTime">Event Time:</label>
-          <input type="datetime-local" id="endTime" name="endTime" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
-        </div>
-
-        <div className={styles.formGroup}>
           <label htmlFor="eventDescription">Event Description:</label>
           <textarea id="eventDescription" name="eventDescription" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} required></textarea>
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="description">Event Description:</label>
-          <textarea id="description" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} required></textarea>
-        </div>
-
-        <div className={styles.formGroup}>
           <label htmlFor="startTime">Start Time:</label>
-          <input type="text" id="startTime" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+          <input type="time" id="startTime" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="endTime">End Time:</label>
-          <input type="text" id="endTime" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
+          <input type="time" id="endTime" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
         </div>
 
         <div className={styles.formGroup}>
@@ -102,10 +82,10 @@ function Create() {
           </label>
         </div>
 
-        <div className={styles.formGroup}>
+        {/* <div className={styles.formGroup}>
           <label htmlFor="imageFile">Upload Image:</label>
           <input type="file" id="imageFile" name="imageFile" accept="image/*" onChange={handleFileChange} required />
-        </div>
+        </div> */}
 
         <button type="submit" className={styles.createButton}>Create Event</button>
         

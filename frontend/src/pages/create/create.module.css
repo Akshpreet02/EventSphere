@@ -30,7 +30,8 @@
 }
 
 .formGroup input[type="text"],
-.formGroup input[type="datetime-local"],
+.formGroup input[type="time"],
+.formGroup input[type="date"],
 .formGroup textarea,
 .formGroup input[type="file"],
 .formGroup input[type="checkbox"] {
