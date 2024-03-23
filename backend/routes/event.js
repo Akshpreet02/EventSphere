@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { Event } = require("../db/index.js");
+const mongoose = require('mongoose');
 
 router.get("/getEvents", async(req, res) => {
     console.log("Getting events from backend");
@@ -31,7 +32,6 @@ router.get('/getEventById', async(req, res) => {
 
         if(!event) {
             return res.status(404).json({ message: "Event not found" });
-
         }
 
         res.status(200).json({
@@ -57,6 +57,31 @@ router.get("/getUserEvents", async (req, res) => {
     } catch(error) {
         console.error("Error fetching user events:", error);
         res.status(500).json({ message: "Error fetching events for user." });
+    }
+})
+
+router.put("/rsvp", async (req,res) =>{
+    console.log("RSVPing a user to an event");
+
+    try {
+        let { eventId, userId } = req.body;
+        console.log(userId, eventId)
+
+        const updatedEvent = await Event.findByIdAndUpdate(
+            eventId,
+            {
+                $addToSet: {RSVPs: { user: userId } }
+            },
+            {new: true}
+        );
+    
+        if(updatedEvent) {
+            res.status(200).json({ success: true, message: 'RSVP updated', updatedEvent});
+        } else {
+            res.status(400).json({ success: false, message: 'Server error', error: error.message });
+        }
+    } catch(error) {
+        res.status(500).json({ success: false, message: 'Server error', error: error.message });
     }
 })
 
@@ -101,7 +126,8 @@ router.post("/addEvent", async (req, res) => {
             error: error.message
         });
     }
-});
+})
+
 
 
 module.exports = router;

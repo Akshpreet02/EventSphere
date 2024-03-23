@@ -8,7 +8,11 @@ const userSchema = new mongoose.Schema({
     password: String,
     email: String,
     full_name: String,
-    role: String
+    role: {
+      type: String,
+      enum: ['attendee', 'organizer'],
+      required: true
+    }
 });
 
 const eventSchema = new mongoose.Schema({
@@ -23,11 +27,10 @@ const eventSchema = new mongoose.Schema({
   status: { type: String, required: true, enum: ['planning', 'active', 'completed'] },
   rsvp_required: { type: Boolean },
   RSVPs: [{
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    status: { type: String, enum: ['accepted', 'declined', 'pending'] }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   }],
   reviews: [{
-    reviewer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    reviewer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', _id: false},
     review: { type: String },
     rating: { type: Number, min: 1, max: 5 }
   }],

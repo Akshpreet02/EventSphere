@@ -7,8 +7,9 @@ import { useContext } from 'react';
 
 function Event() {
   const { eventId } = useParams();
-  const { userRole, userId } = useContext(UserContext);
+  const { userRole, userId, isLoggedIn } = useContext(UserContext);
   const [eventData, setEventData] = useState(null);
+  const [hasRSVPd, setHasRSVPd] = useState(false);
 
   console.log("In event")
   
@@ -40,13 +41,51 @@ function Event() {
     }
   }, [eventId])
 
+  //function being called inside the useEffect below
+  const checkUserRSVP = async () => {
+    try {
+      const url = new URL(`http://localhost:3001/event/rsvpd`);
+      url.searchParams.append('userID', userId); // Append userID as a query parameter
+      url.searchParams.append('eventId', eventId);
+
+      const response = await fetch(url);
+
+      if(!response.ok) {
+        throw new Error('Failed to check RSVP status');
+      }
+
+      const { hasRSVPd } = await response.json();
+      setHasRSVPd(hasRSVPd);
+      } catch(error) {
+        console.error('Error during RSVP status check', error);
+      }
+  }
+
+  //useeffect to check whether or not the attendee has already rsvped.
+  useEffect(() => {
+    if (isLoggedIn && userId && eventId) {
+      checkUserRSVP();
+    }
+  }, [eventId, userId, isLoggedIn])
+
   if(!eventData) {
     return <div>
       Loading...
     </div>
   }
 
+  //RSVPing the user to the event here
   const handleRSVP = async () => {
+    if(!isLoggedIn) {
+      console.error("User must be logged in to RSVP");
+      return;
+    }
+
+    const credentials = {
+      "eventId": eventId,
+      "userId": userId
+    }
+
     try {
       //add logic for no multiple rsvps from same user, button should be greyed out for specific events
       const url = 'http://localhost:3001/event/rsvp'; // Adjust URL to your needs
@@ -55,7 +94,7 @@ function Event() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ eventId, userId }), // Send eventId and userId to backend
+        body: JSON.stringify(credentials), // Send eventId and userId to backend
       });
 
       if (!response.ok) {
@@ -67,7 +106,6 @@ function Event() {
 
     } catch (error) {
       console.error('Could not RSVP', error);
-      // Handle RSVP error here
     }
   }
 
@@ -81,8 +119,8 @@ function Event() {
           <img src={eventData.event.image_url} alt={eventData.event.event_name} />
         </div>
       )}
-      {userRole === 'attendee' && (
-        <button onClick={handleRSVP}>RSVP</button>
+      {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn &&(   //checks for displaying the rsvp button.
+        <button onClick={handleRSVP}>RSVP for this event.</button>
       )}
     </div>
   );
