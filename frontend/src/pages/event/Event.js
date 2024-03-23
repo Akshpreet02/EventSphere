@@ -7,7 +7,7 @@ import { useContext } from 'react';
 
 function Event() {
   const { eventId } = useParams();
-  const { userRole, userId, isLoggedIn } = useContext(UserContext);
+  const { userRole, userID, isLoggedIn } = useContext(UserContext);
   const [eventData, setEventData] = useState(null);
   const [hasRSVPd, setHasRSVPd] = useState(false);
 
@@ -24,6 +24,8 @@ function Event() {
   
         const response = await fetch(url);
         console.log(eventId);
+
+        console.log(UserContext);
   
         if (!response.ok) {
           throw new Error('Something went wrong!');
@@ -41,32 +43,51 @@ function Event() {
     }
   }, [eventId])
 
-  //function being called inside the useEffect below
-  const checkUserRSVP = async () => {
-    try {
-      const url = new URL(`http://localhost:3001/event/rsvpd`);
-      url.searchParams.append('userID', userId); // Append userID as a query parameter
-      url.searchParams.append('eventId', eventId);
+  // //function being called inside the useEffect below
+  // const checkUserRSVP = async () => {
+  //   try {
+  //     const url = new URL(`http://localhost:3001/event/rsvpd`);
+  //     url.searchParams.append('userID', userId); // Append userID as a query parameter
+  //     url.searchParams.append('eventId', eventId);
 
-      const response = await fetch(url);
+  //     const response = await fetch(url);
 
-      if(!response.ok) {
-        throw new Error('Failed to check RSVP status');
-      }
+  //     if(!response.ok) {
+  //       throw new Error('Failed to check RSVP status');
+  //     }
 
-      const { hasRSVPd } = await response.json();
-      setHasRSVPd(hasRSVPd);
-      } catch(error) {
-        console.error('Error during RSVP status check', error);
-      }
-  }
+  //     const { hasRSVPd } = await response.json();
+  //     setHasRSVPd(hasRSVPd);
+  //     } catch(error) {
+  //       console.error('Error during RSVP status check', error);
+  //     }
+  // }
 
   //useeffect to check whether or not the attendee has already rsvped.
   useEffect(() => {
-    if (isLoggedIn && userId && eventId) {
+    const checkUserRSVP = async () => {
+      try {
+        const url = new URL(`http://localhost:3001/event/rsvpd`);
+        url.searchParams.append('userID', userID); // Append userID as a query parameter
+        url.searchParams.append('eventId', eventId);
+  
+        const response = await fetch(url);
+  
+        if(!response.ok) {
+          throw new Error('Failed to check RSVP status');
+        }
+  
+        const { hasRSVPd } = await response.json();
+        setHasRSVPd(hasRSVPd);
+        } catch(error) {
+          console.error('Error during RSVP status check', error);
+        }
+    }
+
+    if (isLoggedIn && userID && eventId) {
       checkUserRSVP();
     }
-  }, [eventId, userId, isLoggedIn])
+  }, [eventId, userID, isLoggedIn])
 
   if(!eventData) {
     return <div>
@@ -81,16 +102,21 @@ function Event() {
       return;
     }
 
+
+    console.log("The user context: ",UserContext);
+    console.log("In event the eventid is: ", eventId)
+    console.log("In event the userId is: ", userID)
+
     const credentials = {
       "eventId": eventId,
-      "userId": userId
+      "userId": userID
     }
 
     try {
       //add logic for no multiple rsvps from same user, button should be greyed out for specific events
       const url = 'http://localhost:3001/event/rsvp'; // Adjust URL to your needs
       const response = await fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -103,7 +129,7 @@ function Event() {
 
       // Handle successful RSVP logic here, like updating state to show user's RSVP status
       //user should recieve email in the backend
-
+      setHasRSVPd(true);
     } catch (error) {
       console.error('Could not RSVP', error);
     }
@@ -119,7 +145,7 @@ function Event() {
           <img src={eventData.event.image_url} alt={eventData.event.event_name} />
         </div>
       )}
-      {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn &&(   //checks for displaying the rsvp button.
+      {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
         <button onClick={handleRSVP}>RSVP for this event.</button>
       )}
     </div>
