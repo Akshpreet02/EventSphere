@@ -17,8 +17,11 @@ function Create() {
   const [requireRSVP, setRequireRSVP] = useState(false);
   // const [imageFile, setImageFile] = useState();
   // const [file, setFile] = useState()
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageURL, setImageUrl] = useState('');
   const { userID } = useContext(UserContext);
+  const[organizerURL, setOrganizerURL] = useState('');
+  const[ticketURL, setTicketURL] = useState('');
+
 
   // const handleUpload = (e) => {
   //   const formdata = new FormData();
@@ -36,7 +39,7 @@ function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Temporary
-    console.log('Form submitted:', { userID, eventName, eventDescription, startTime, endTime, startDate, endDate, eventLocation, status, imageUrl, requireRSVP }); 
+    console.log('Form submitted:', { userID, eventName, eventDescription, startTime, endTime, startDate, endDate, eventLocation, status, requireRSVP, imageURL, ticketURL, organizerURL }); 
 
     const newEvent = {
       event_name: eventName,
@@ -49,11 +52,12 @@ function Create() {
       organizer: userID, // Replace with actual organizer ID
       status: status,
       time_zone: 'MST', // If you have a timezone state, use that
-      invitations: [], // Replace with actual invitations array if applicable
       rsvp_required: requireRSVP,
       RSVPs: [], // Initialize as empty or with actual data if available
       reviews: [], // Initialize as empty or with actual data if available
-      image_url: imageUrl
+      image_url: imageURL,
+      organizer_url: organizerURL,
+      ticket_url: ticketURL
     };
 
     try {
@@ -139,8 +143,18 @@ function Create() {
         </div> */}
 
         <div className={styles.formGroup}>
-          <label htmlFor="imageUrl">Image URL:</label>
-          <input type="text" id="imageUrl" name="imageUrl" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+          <label htmlFor="imageURL">Image URL:</label>
+          <input type="text" id="imageURL" name="imageURL" value={imageURL} onChange={(e) => setImageUrl(e.target.value)} />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="organizerUrl">Organizer URL:</label>
+          <input type="text" id="organizerUrl" name="organizerUrl" value={organizerURL} onChange={(e) => setOrganizerURL(e.target.value)} />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="ticketUrl">Ticket URL:</label>
+          <input type="text" id="ticketUrl" name="ticketUrl" value={ticketURL} onChange={(e) => setTicketURL(e.target.value)} />
         </div>
 
         <button type="submit" className={styles.createButton}>Create Event</button>

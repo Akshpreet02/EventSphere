@@ -43,7 +43,7 @@ const Header = () => {
               </li>
             </Link>
             )}
-            {!!isLoggedIn && (
+            {!!isLoggedIn && (   //what account looks like if user is logged in
               <li className={styles.dropdown}>
                 <div className={styles.list}>
                 Account
@@ -58,7 +58,7 @@ const Header = () => {
                   </div>
               </li>
             )}
-            {!isLoggedIn && (
+            {!isLoggedIn && ( //what account drop down looks like if not logged in
               <li className={styles.dropdown}>
                 <div className={styles.list}>
                 Account

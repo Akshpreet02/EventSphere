@@ -23,6 +23,7 @@ function Home() {
       }
       const json = await response.json();
       setFeaturedEvents(json.events); // Now correctly refers to the setEvents function
+      console.log(json.events)
     } catch (err) {
       setError(err.message);
       console.error("Failed to fetch events:", err);
@@ -34,8 +35,8 @@ function Home() {
       <h1>Featured Events</h1>
       <div className={styles.eventlist}>
       {featuredEvents.map((event, index) => (
-        <Link key={index} to={`/event/${event.id}`} className={styles.eventLink}>
-          <EventCard key={index} event={event} />
+        <Link key={event.eventId} to={`/event/${event.eventId}`} className={styles.eventLink}>
+          <EventCard key={event.eventId} event={event} />
         </Link>
         ))}
       </div>

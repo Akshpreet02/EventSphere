@@ -11,9 +11,27 @@ import Signup from './pages/signup/Signup';
 import Footer from './components/footer/Footer';
 import Event from './pages/event/Event';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function App() {
   console.log("in the app component")
+  /* Addiing alert for refresh since logged in is stored as a state variable currently*/
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      // Preventing the default action to trigger the confirmation dialog
+      event.preventDefault();
+      // Chrome requires returnValue to be set
+      event.returnValue = 'IF YOU REFRESH YOU WILL BE REQUIRED TO SIGN IN AGAIN.';
+    };
+
+    // Adding the event listener when the component mounts
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Removing the event listener when the component unmounts
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+
+
   return (
     <UserContextProvider>
     <Router>

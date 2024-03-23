@@ -10,13 +10,16 @@ export const UserContext = createContext({
 export function UserContextProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to manage login status
   const [userID, setUserID] = useState(null);
+  const [userRole, setUserRole] = useState('');
 
   // Value to be provided to the context consumers
   const contextValue = {
     isLoggedIn,
     setIsLoggedIn, // Function to update login status
     userID,
-    setUserID
+    setUserID,
+    userRole,
+    setUserRole
   };
 
   return (

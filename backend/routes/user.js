@@ -49,7 +49,8 @@ router.post('/login', async (req, res) => {
     if(user) {
         res.status(200).json({
             "userFound": true,
-            "id": user._id
+            "id": user._id,
+            "role": user.role
         })
     } else {
         res.status(200).json({

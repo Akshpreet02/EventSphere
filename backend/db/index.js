@@ -21,10 +21,6 @@ const eventSchema = new mongoose.Schema({
   venue: { type: String, required: true },
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   status: { type: String, required: true, enum: ['planning', 'active', 'completed'] },
-  invitations: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
   rsvp_required: { type: Boolean },
   RSVPs: [{
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -35,7 +31,9 @@ const eventSchema = new mongoose.Schema({
     review: { type: String },
     rating: { type: Number, min: 1, max: 5 }
   }],
-  image_url: { type: String }
+  image_url: { type: String },
+  organizer_url: { type: String },
+  ticket_url: { type: String}
 });
 
 const User = mongoose.model('User', userSchema);

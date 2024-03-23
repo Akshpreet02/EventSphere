@@ -7,9 +7,40 @@ router.get("/getEvents", async(req, res) => {
 
     const events = await Event.find();
 
+    //remapping the _id field to eventID to prevent issues in the frontend.
+    const remappedEvents = events.map(event => ({
+        eventId: event._id,
+        // Spread the rest of the event object properties
+        ...event.toObject(),
+    }));
+
     res.status(200).json({
-        "events": events
+        "events": remappedEvents
     })
+})
+
+router.get('/getEventById', async(req, res) => {
+    try {
+        const eventId = req.query.eventId;
+
+        if(!eventId) {
+            return res.status(400).json({message: "No event ID provided."})
+        }
+
+        const event = await Event.findById(eventId);
+
+        if(!event) {
+            return res.status(404).json({ message: "Event not found" });
+
+        }
+
+        res.status(200).json({
+            "event": event
+        })
+    } catch(error) {
+        console.error("Error finding event: ", error);
+        res.status(500).json({message: "Error finding event"});
+    }
 })
 
 router.get("/getUserEvents", async (req, res) => {
@@ -45,7 +76,6 @@ router.post("/addEvent", async (req, res) => {
             venue: payLoad.venue,
             organizer: payLoad.organizer, // This expects an ObjectId of the User
             status: payLoad.status,
-            invitations: payLoad.invitations, // Array of User ObjectId
             rsvp_required: payLoad.rsvp_required,
             RSVPs: payLoad.RSVPs.map(rsvp => ({
                 user: rsvp.user, // ObjectId of the User
@@ -56,7 +86,9 @@ router.post("/addEvent", async (req, res) => {
                 review: review.review,
                 rating: review.rating
             })),
-            image_url: payLoad.image_url
+            image_url: payLoad.image_url,
+            organizer_url: payLoad.organizer_url,
+            ticket_url: payLoad.ticket_url
         });
 
         res.status(200).json({
