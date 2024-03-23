@@ -36,11 +36,13 @@ const Header = () => {
                 Browse
               </li>
             </Link> */}
-            <Link to='/create' className={styles.list}>
+            {isLoggedIn && (
+              <Link to='/create' className={styles.list}>
               <li>
                 Create
               </li>
             </Link>
+            )}
             {!!isLoggedIn && (
               <li className={styles.dropdown}>
                 <div className={styles.list}>
