@@ -56,7 +56,7 @@ router.post("/addEvent", async (req, res) => {
                 review: review.review,
                 rating: review.rating
             })),
-            image_url: payLoad.image
+            image_url: payLoad.image_url
         });
 
         res.status(200).json({

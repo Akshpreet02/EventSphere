@@ -1,11 +1,12 @@
 // Create.js
 import React, { useState } from 'react';
 import styles from './create.module.css';
-import axios from 'axios';
+import { UserContext } from "../../UserContext.jsx";
+import { useContext } from 'react';
 
 function Create() {
   const [eventName, setEventName] = useState('');
-  const [error, setError] = useState('');
+  const [setError] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -17,6 +18,7 @@ function Create() {
   // const [imageFile, setImageFile] = useState();
   // const [file, setFile] = useState()
   const [imageUrl, setImageUrl] = useState('');
+  const { userID } = useContext(UserContext);
 
   // const handleUpload = (e) => {
   //   const formdata = new FormData();
@@ -34,7 +36,7 @@ function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Temporary
-    console.log('Form submitted:', { eventName, eventDescription, startTime, endTime, startDate, endDate, eventLocation, status, imageUrl, requireRSVP }); 
+    console.log('Form submitted:', { userID, eventName, eventDescription, startTime, endTime, startDate, endDate, eventLocation, status, imageUrl, requireRSVP }); 
 
     const newEvent = {
       event_name: eventName,
@@ -44,14 +46,14 @@ function Create() {
       start_date: startDate.split('-').reverse().join(''), // Adjust date format if necessary
       end_date: endDate.split('-').reverse().join(''), // Adjust date format if necessary
       venue: eventLocation,
-      organizer: '65fb86bd147225803d1db49b', // Replace with actual organizer ID
+      organizer: userID, // Replace with actual organizer ID
       status: status,
-      image_url: imageUrl,
-      time_zone: 'UTC', // If you have a timezone state, use that
+      time_zone: 'MST', // If you have a timezone state, use that
       invitations: [], // Replace with actual invitations array if applicable
       rsvp_required: requireRSVP,
       RSVPs: [], // Initialize as empty or with actual data if available
-      reviews: [] // Initialize as empty or with actual data if available
+      reviews: [], // Initialize as empty or with actual data if available
+      image_url: imageUrl
     };
 
     try {
