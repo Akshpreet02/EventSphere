@@ -8,9 +8,9 @@
 .logo {
   display: flex;
   align-items: center;
-  padding: 10px 35px;
+  padding: 0 35px;
   width: 60px;
-  height:auto;
+  height: auto;
 }
 
 .nav {

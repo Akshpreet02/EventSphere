@@ -5,7 +5,7 @@
   border: solid black 2px;
   border-radius: 5px;
   padding: 10px;
-  margin: 10px;
+  margin: 0;
   transition: scale 0.3s;
 }
 
@@ -15,7 +15,9 @@
 }
   
 .eventCard img {
+  height: 200px;
   width: 100%;
+  object-fit: cover;
   border-radius: 5px;
 }
   

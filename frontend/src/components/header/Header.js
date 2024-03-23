@@ -23,7 +23,7 @@ const Header = () => {
 
     return (
       <div className={styles.header}>
-        <div><img className={styles.logo} src={Logo} alt='logo'></img></div>
+       <img className={styles.logo} src={Logo} alt='logo'/>
         <div className={styles.nav}>
           <ul>
             <Link to='/' className={styles.list}>
