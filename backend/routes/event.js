@@ -51,6 +51,8 @@ router.get("/getUserEvents", async (req, res) => {
 
         const userEvents = await Event.find({ organizer: userID });
 
+        console.log(userEvents);
+
         res.status(200).json({
             "userEvents": userEvents
         });
