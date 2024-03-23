@@ -18,20 +18,15 @@ function Event() {
   useEffect(() => {
     const fetchEventData = async () => {
       try {
+        //getting specific event details:
         console.log("hitting the event backend")
         const url = new URL("http://localhost:3001/event/getEventById");
         url.searchParams.append('eventId', eventId);
-  
         const response = await fetch(url);
-        console.log(eventId);
-
-        console.log(UserContext);
-  
         if (!response.ok) {
           throw new Error('Something went wrong!');
         }
         const data = await response.json();
-        console.log(data)
         setEventData(data);
       } catch (error) {
         console.error("Couldnt fetch event data", error);
@@ -43,32 +38,12 @@ function Event() {
     }
   }, [eventId])
 
-  // //function being called inside the useEffect below
-  // const checkUserRSVP = async () => {
-  //   try {
-  //     const url = new URL(`http://localhost:3001/event/rsvpd`);
-  //     url.searchParams.append('userID', userId); // Append userID as a query parameter
-  //     url.searchParams.append('eventId', eventId);
-
-  //     const response = await fetch(url);
-
-  //     if(!response.ok) {
-  //       throw new Error('Failed to check RSVP status');
-  //     }
-
-  //     const { hasRSVPd } = await response.json();
-  //     setHasRSVPd(hasRSVPd);
-  //     } catch(error) {
-  //       console.error('Error during RSVP status check', error);
-  //     }
-  // }
-
   //useeffect to check whether or not the attendee has already rsvped.
   useEffect(() => {
     const checkUserRSVP = async () => {
       try {
         const url = new URL(`http://localhost:3001/event/rsvpd`);
-        url.searchParams.append('userID', userID); // Append userID as a query parameter
+        url.searchParams.append('userId', userID); // Append userID as a query parameter
         url.searchParams.append('eventId', eventId);
   
         const response = await fetch(url);
@@ -89,6 +64,8 @@ function Event() {
     }
   }, [eventId, userID, isLoggedIn])
 
+
+  //for user experience
   if(!eventData) {
     return <div>
       Loading...
@@ -101,11 +78,6 @@ function Event() {
       console.error("User must be logged in to RSVP");
       return;
     }
-
-
-    console.log("The user context: ",UserContext);
-    console.log("In event the eventid is: ", eventId)
-    console.log("In event the userId is: ", userID)
 
     const credentials = {
       "eventId": eventId,

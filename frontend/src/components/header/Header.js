@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
     const { isLoggedIn, setIsLoggedIn, userRole } = useContext(UserContext);
     const navigate = useNavigate(); // Hook to get the navigate function
-
+    
     console.log("Logged in? ",isLoggedIn)
 
     const handleLogout = () => {

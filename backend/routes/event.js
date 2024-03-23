@@ -87,6 +87,39 @@ router.put("/rsvp", async (req,res) =>{
     }
 })
 
+
+router.get("/rsvpd", async (req, res) => {
+    const { userId, eventId } = req.query;
+
+    try {
+        if(!userId || !eventId) {
+            return res.status(400).send({"message": 'Missing userId or eventId'});
+        }
+    
+        const event = await Event.findById(eventId).exec();
+    
+        if (!event) {
+            return res.status(404).send('Event not found');
+        }
+        
+        let userFound = false;
+
+        for (let i = 0; i < event.RSVPs.length; i++) {
+            if(event.RSVPs[i].user == userId) {
+                userFound = true;
+                break
+            }
+        }
+
+        const hasRSVPd = userFound;
+          
+        res.json({ hasRSVPd });
+    } catch (error) {
+        console.error('Server Error', error);
+        res.status(500).send('Internal Server Error');
+    }
+})
+
 router.post("/addEvent", async (req, res) => {
     console.log("Posting event to backend");
 
