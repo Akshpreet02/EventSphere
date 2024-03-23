@@ -16,18 +16,25 @@ router.post("/addUser", async(req, res) => {
     console.log("Posting user to backend")
 
     const payLoad = req.body;
-
-    await User.create({
-        username: payLoad.username,
-        password: payLoad.password,
-        email: payLoad.email,
-        full_name: payLoad.full_name,
-        role: payLoad.role
-    })
-
-    res.status(200).json({
-        msg: "User created"
-    })
+    try {
+        await User.create({
+            username: payLoad.username,
+            password: payLoad.password,
+            email: payLoad.email,
+            full_name: payLoad.full_name,
+            role: payLoad.role
+        })
+    
+        res.status(200).json({
+            msg: "User created"
+        })
+    } catch(error) {
+        console.error("Error creating user", error);
+        res.status(500).json({
+            msg: "Failed to create user due to an internal error."
+        });
+    }
+    
 })
 
 router.post('/login', async (req, res) => {
