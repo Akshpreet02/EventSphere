@@ -5,6 +5,10 @@
   background-color: maroon;
 }
 
+.title {
+  color: white
+}
+
 .logo {
   display: flex;
   align-items: center;

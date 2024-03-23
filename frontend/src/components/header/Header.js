@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
     const { isLoggedIn, setIsLoggedIn, userRole } = useContext(UserContext);
     const navigate = useNavigate(); // Hook to get the navigate function
-    
+
     console.log("Logged in? ",isLoggedIn)
 
     const handleLogout = () => {
@@ -24,6 +24,9 @@ const Header = () => {
     return (
       <div className={styles.header}>
         <div><img className={styles.logo} src={Logo} alt='logo'></img></div>
+        <div className={styles.title}>
+              <h1> EVENT SPHERE</h1>
+            </div>
         <div className={styles.nav}>
           <ul>
             <Link to='/' className={styles.list}>
