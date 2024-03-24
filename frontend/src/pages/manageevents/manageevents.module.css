@@ -1,16 +1,9 @@
-.home {
+.myevents {
     padding: 10px;
     margin: 10px;
     border: solid black 1px;
-}
-
-.home h1 {
-    padding-left: 30px;
-}
-
-.home input {
-padding-right: 30px;
-height: 50px;
+    display: flex;
+    flex-direction: column;
 }
 
 .eventlist {
@@ -21,9 +14,4 @@ height: 50px;
     grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
     justify-content: center;
     padding: 15px 0 5px 0;
-}
-
-.eventLink {
-    text-decoration: none;
-    color: black;
 }
