@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styles from './create.module.css';
 import { UserContext } from "../../UserContext.jsx";
-import { useContext } from 'react';
+import { useContext, useNavigate } from 'react';
 
 function Create() {
   const [eventName, setEventName] = useState('');
@@ -21,6 +21,7 @@ function Create() {
   const { userID } = useContext(UserContext);
   const[organizerURL, setOrganizerURL] = useState('');
   const[ticketURL, setTicketURL] = useState('');
+  const navigate = useNavigate(); // Hook to get the navigate function
 
 
   // const handleUpload = (e) => {
@@ -71,6 +72,7 @@ function Create() {
       if (!response.ok) {
         throw new Error('Error adding todo');
       }
+      navigate('/myevents');
     } catch (err) {
       setError(err.message);
     }
