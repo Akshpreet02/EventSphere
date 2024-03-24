@@ -107,18 +107,40 @@ function Event() {
     }
   }
 
+  // Move to separate js file for modularity
+  function formatDate(dateString) {
+    if (/^\d{8}$/.test(dateString)) {
+      const day = dateString.substring(0, 2);
+      const month = dateString.substring(2, 4);
+      const year = dateString.substring(4, 8);
+      
+      const date = new Date(`${year}-${month}-${day}T00:00:00Z`);
+      
+      const options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+      
+      return date.toLocaleDateString(undefined, options);
+    } else {
+      return 'Invalid Date';
+    }
+  }  
+
   return (
     <div className={styles.eventContainer}>
-      <h1>{eventData.event_name}</h1>
+      <h1>{eventData.event.event_name}</h1>
+      {eventData.event.image_url && (
+        <img className={styles.eventImage} src={eventData.event.image_url} alt={eventData.event.event_name} />
+      )}
       <p>Description: {eventData.event.description}</p>
       <p>Location: {eventData.event.venue}</p>
-      {eventData.event.image_url && (
-        <div className={styles.eventImage}>
-          <img src={eventData.event.image_url} alt={eventData.event.event_name} />
-        </div>
-      )}
+      <p>
+        {/*If dates are the same, only display one. Otherwise display the start and end date. */}
+        {eventData.event.start_date === eventData.event.end_date 
+          ? `Date: ${formatDate(eventData.event.start_date)}` 
+          : `Runs From: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
+      </p>
+
       {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
-        <button onClick={handleRSVP}>RSVP for this event.</button>
+        <button onClick={handleRSVP}>AARSVP for this event.</button>
       )}
     </div>
   );
