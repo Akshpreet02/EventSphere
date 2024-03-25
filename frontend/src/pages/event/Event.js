@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Event() {
-  const { eventId } = useParams();
+  const { eventId } = useParams();  //getting eventId from the eventcard.
   const { userRole, userID, isLoggedIn } = useContext(UserContext);
   const [eventData, setEventData] = useState(null);
   const [hasRSVPd, setHasRSVPd] = useState(false);
@@ -182,6 +182,12 @@ function Event() {
 
       {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === true && userID && (   //checks for displaying the rsvp button.
         <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
+      )}
+
+      {userRole === 'organizer' && isLoggedIn && userID && (
+        <button onClick={() => navigate(`/edit-event/${eventId}`)}>
+          Edit Event
+        </button>
       )}
     </div>
   );
