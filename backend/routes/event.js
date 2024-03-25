@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 const { Event } = require("../db/index.js");
-const mongoose = require('mongoose');
 
 router.get("/getEvents", async(req, res) => {
     console.log("Getting events from backend");
@@ -43,18 +42,43 @@ router.get('/getEventById', async(req, res) => {
     }
 })
 
+
 router.get("/getUserEvents", async (req, res) => {
     try {
-        const { userID } = req.query;
+        const { userID, userRole } = req.query;
+        let userEvents = [];
 
+        //checks
         console.log(userID)
+        console.log(userRole)
 
-        const userEvents = await Event.find({ organizer: userID });
+        if (!userID || !userRole) {
+            return res.status(400).json({ message: "UserID and UserRole are required." });
+        }
 
-        console.log(userEvents);
+        if(userRole === 'organizer') {
+            console.log("Fetching events for organizer:", userID);
+            userEvents = await Event.find({ organizer: userID });
+        } else if (userRole === 'attendee') {
+            console.log("Fetching events for attendee:", userID);
+            userEvents = await Event.find({
+                RSVPs: { $elemMatch: { user: userID } }
+            });
+        } else {
+            console.log("Invalid or unspecified user role.");
+            return res.status(400).json({ message: "Invalid or unspecified user role." });
+        }
 
+        const remappedEvents = userEvents.map(event => ({
+            eventId: event._id,
+            // Spread the rest of the event object properties
+            ...event.toObject(),
+        }));
+
+        //returning if successful
+        console.log(remappedEvents);
         res.status(200).json({
-            "userEvents": userEvents
+            "userEvents": remappedEvents
         });
     } catch(error) {
         console.error("Error fetching user events:", error);
@@ -62,7 +86,7 @@ router.get("/getUserEvents", async (req, res) => {
     }
 })
 
-router.put("/rsvp", async (req,res) =>{
+router.put("/rsvp", async (req, res) =>{
     console.log("RSVPing a user to an event");
 
     try {
@@ -73,6 +97,31 @@ router.put("/rsvp", async (req,res) =>{
             eventId,
             {
                 $addToSet: {RSVPs: { user: userId } }
+            },
+            {new: true}
+        );
+    
+        if(updatedEvent) {
+            res.status(200).json({ success: true, message: 'RSVP updated', updatedEvent});
+        } else {
+            res.status(400).json({ success: false, message: 'Server error', error: error.message });
+        }
+    } catch(error) {
+        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+    }
+})
+
+router.put('/UnRsvp', async(req, res) => {
+    console.log("unRSVPing a user to an event.");
+
+    try {
+        let { eventId, userId } = req.body;
+        console.log(userId, eventId)
+
+        const updatedEvent = await Event.findByIdAndUpdate(
+            eventId,
+            {
+                $pull: {RSVPs: { user: userId } }
             },
             {new: true}
         );

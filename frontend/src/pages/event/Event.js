@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styles from './event.module.css';
 import { UserContext } from "../../UserContext.jsx";
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 function Event() {
@@ -10,6 +11,7 @@ function Event() {
   const { userRole, userID, isLoggedIn } = useContext(UserContext);
   const [eventData, setEventData] = useState(null);
   const [hasRSVPd, setHasRSVPd] = useState(false);
+  const navigate = useNavigate(); // Hook to get the navigate function
 
   console.log("In event")
   
@@ -85,8 +87,7 @@ function Event() {
     }
 
     try {
-      //add logic for no multiple rsvps from same user, button should be greyed out for specific events
-      const url = 'http://localhost:3001/event/rsvp'; // Adjust URL to your needs
+      const url = 'http://localhost:3001/event/rsvp'; 
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
@@ -98,10 +99,46 @@ function Event() {
       if (!response.ok) {
         throw new Error('Failed to RSVP');
       }
-
-      // Handle successful RSVP logic here, like updating state to show user's RSVP status
-      //user should recieve email in the backend
+      
+      //updating rsvped state/
+      //send user email from the backend.
       setHasRSVPd(true);
+      navigate('/myevents');
+    } catch (error) {
+      console.error('Could not RSVP', error);
+    }
+  }
+
+  //unRSVPing the user to the event here
+  const handleUnRSVP = async () => {
+    if(!isLoggedIn) {
+      console.error("User must be logged in to RSVP");
+      return;
+    }
+
+    const credentials = {
+      "eventId": eventId,
+      "userId": userID
+    }
+
+    try {
+      const url = 'http://localhost:3001/event/UnRsvp'; 
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials), // Send eventId and userId to backend
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to unRSVP');
+      }
+      
+      //updating rsvped state/
+      //send user email from the backend.
+      setHasRSVPd(false);   
+      navigate('/myevents');  //after unrsvping take them to the my events page.  
     } catch (error) {
       console.error('Could not RSVP', error);
     }
@@ -140,7 +177,11 @@ function Event() {
       </p>
 
       {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
-        <button onClick={handleRSVP}>AARSVP for this event.</button>
+        <button onClick={handleRSVP}>RSVP for this event.</button>
+      )}
+
+      {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === true && userID && (   //checks for displaying the rsvp button.
+        <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
       )}
     </div>
   );

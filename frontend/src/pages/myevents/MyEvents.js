@@ -3,6 +3,7 @@ import styles from './myevents.module.css';
 import EventCard from '../../components/event-card/EventCard';
 import { UserContext } from "../../UserContext.jsx";
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 function MyEvents() {
   console.log("in the events component");
@@ -10,7 +11,7 @@ function MyEvents() {
   // Corrected state management for this component
   const [events, setEvents] = useState([]); // Corrected setter function name
   const [error, setError] = useState(null);
-  const { userID } = useContext(UserContext);   //global state from context api
+  const { userID, userRole } = useContext(UserContext);   //global state from context api
 
   // Fetching of data from the backend
   useEffect(() => { // Fetch events on mount
@@ -23,6 +24,11 @@ function MyEvents() {
       console.log(typeof(userID))
       const url = new URL(`http://localhost:3001/event/getUserEvents`);
       url.searchParams.append('userID', userID); // Append userID as a query parameter
+      //adding the userRole while sending to the backend.
+      //the backend will return the events based on the role.
+      //if role = attendee, itll go through multiple events and check their RSVP lists
+      //if role = organizer, itll go through multiple events and check their organizer
+      url.searchParams.append('userRole', userRole);
 
       const response = await fetch(url);
       console.log(url)
@@ -49,8 +55,10 @@ function MyEvents() {
         </div>
       </div>
       <div className={styles.eventlist}>
-        {events.map((event, index) => (
-          <EventCard key={index} event={event} />
+      {events.map((event, index) => (
+        <Link key={event.eventId} to={`/event/${event.eventId}`} className={styles.eventLink}>
+          <EventCard key={event.eventId} event={event} />
+        </Link>
         ))}
       </div>
       {/* Error handling display */}
@@ -60,3 +68,12 @@ function MyEvents() {
 }
 
 export default MyEvents;
+
+
+{/* <div className={styles.eventlist}>
+      {featuredEvents.map((event, index) => (
+        <Link key={event.eventId} to={`/event/${event.eventId}`} className={styles.eventLink}>
+          <EventCard key={event.eventId} event={event} />
+        </Link>
+        ))}
+      </div> */}

@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import styles from './create.module.css';
 import { UserContext } from "../../UserContext.jsx";
-import { useContext, useNavigate } from 'react';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Create() {
   const [eventName, setEventName] = useState('');
