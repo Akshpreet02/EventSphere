@@ -25,8 +25,8 @@ const Header = () => {
       <div className={styles.header}>
         <div><img className={styles.logo} src={Logo} alt='logo'></img></div>
         <div className={styles.title}>
-              <h1> EVENT SPHERE</h1>
-            </div>
+          <h1> EVENT SPHERE</h1>
+        </div>
         <div className={styles.nav}>
           <ul>
             <Link to='/' className={styles.list}>

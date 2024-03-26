@@ -1,7 +1,6 @@
 .home {
     padding: 10px;
     margin: 10px;
-    border: solid black 1px;
 }
 
 .home h1 {
@@ -18,7 +17,7 @@ height: 50px;
     width: 100%;
     display: grid;
     grid-gap: 3rem;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
     justify-content: center;
     padding: 15px 0 5px 0;
 }
