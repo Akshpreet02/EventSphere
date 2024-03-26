@@ -22,6 +22,7 @@
   
 .eventInfo {
   padding: 10px;
+  color: black;
 }
   
 .eventInfo h2 {
@@ -30,4 +31,5 @@
 
 .eventInfo p {
   margin: 5px 0;
+  text-decoration: none;
 }

@@ -38,4 +38,10 @@
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
     justify-content: center;
     padding: 15px 0 5px 0;
+    text-decoration: none;
+}
+
+.eventLink {
+    text-decoration: none;
+    color: black;
 }
