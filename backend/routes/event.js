@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Event } = require("../db/index.js");
+const { Event, User } = require("../db/index.js");
 const { sendEmail } = require('../mail/mailer');
 
 router.get("/getEvents", async(req, res) => {
@@ -101,10 +101,14 @@ router.put("/rsvp", async (req, res) =>{
             },
             {new: true}
         );
-            
+        
+        console.log(updatedEvent)
+
         //adding email logic to send user RSVP notification
         if(updatedEvent) {
             const user = await User.findById(userId);
+            console.log("inside rsvp and email logic")
+            console.log(user, user.email)
             if (user && user.email) {
                 const subject = 'Event RSVP Confirmation';
                 const textBody = `Hello, you have successfully RSVPed to the event. Event details: ${updatedEvent.event_name}. Login to your EventSphere account and go to My Events for more details`;
