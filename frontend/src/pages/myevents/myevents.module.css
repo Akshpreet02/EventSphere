@@ -3,7 +3,6 @@
 .myevents {
     padding: 10px;
     margin: 10px;
-    border: solid black 1px;
     display: flex;
     flex-direction: column;
 }
