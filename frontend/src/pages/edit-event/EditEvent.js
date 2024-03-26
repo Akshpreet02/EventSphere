@@ -106,7 +106,8 @@ function EditEvent() {
 
 
     return (
-        <div  className={styles.editevents}>
+        <div className={styles.editBackground}>
+        <div className={styles.editevents}>
             <h1>Edit Event</h1>
                 <form onSubmit={handleEdit}>
                     <div className={styles.formGroup}>
@@ -188,6 +189,7 @@ function EditEvent() {
                     <button type="Edit" className={styles.editButton}>Edit Event</button>
                     
                 </form>
+        </div>
         </div>
     )
 }
