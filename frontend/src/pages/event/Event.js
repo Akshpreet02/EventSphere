@@ -193,6 +193,10 @@ function Event() {
           </div>
           
           <div className={styles.buttonContainer}>
+            { eventData.event.rsvp_required && !isLoggedIn && (
+              <button onClick={() => navigate('/login')}>Login to RSVP for this event</button>
+            )}
+
             {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
               <button onClick={handleRSVP}>RSVP for this event.</button>
             )}
