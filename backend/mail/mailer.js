@@ -1,26 +1,33 @@
+require('dotenv').config();
 const nodemailer = require('nodemailer');
-require("dotenv").config()
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // true for 465, false for other ports
     auth: {
-      user: process.env.USER, // your SMTP username
-      pass: process.env.APP_PASSWORD // your SMTP password
+      user: process.env.NODEMAILER_username, // sender gmail address.
+      pass: process.env.PASSWORD // App password from gmail account.
     }
 });
 
-  const sendEmail = async (mailOptions) => {
+const sendEmail = async (to, subject, textBody) => {
+    console.log(process.env.NODEMAILER_username);
+    console.log(process.env.PASSWORD);
+    const mailOptions = {
+      from: '"EventSphere" eventspherenotification@gmail.com', // The sender's email address
+      to, // The recipient's email address
+      subject, // The subject of the email
+      text: textBody // The plain text body of the email
+    };
+  
     try {
       let info = await transporter.sendMail(mailOptions);
       console.log('Email sent: %s', info.messageId);
       return info;
     } catch (error) {
       console.error('Error sending email: ', error);
-      throw error; // Rethrow the error so calling function can handle it
+      throw error; // Allows calling function to handle the error
     }
 };
   
-  module.exports = { sendEmail };
+
+module.exports = { sendEmail };
