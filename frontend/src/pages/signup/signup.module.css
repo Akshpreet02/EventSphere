@@ -34,6 +34,10 @@ h1 {
     font-size: 18px;
 }
 
+select {
+    width: 85%;
+}
+
 .signupLink {
     margin-bottom: 20px;
     text-align: center;
