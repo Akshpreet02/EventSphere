@@ -191,6 +191,18 @@ function Event() {
                 ? `Date: ${formatDate(eventData.event.start_date)}` 
                 : `Runs from: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
           </div>
+
+          <div className={styles.eventReviewsContainer}>
+            <ul>
+              <h3>Reviews:</h3>
+              {eventData.event.reviews.map((review, index) => (
+                <li key={index}>
+                  <p>Review: {review.review}</p>
+                  <p>Rating: {review.rating}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
           
           <div className={styles.buttonContainer}>
             { eventData.event.rsvp_required && !isLoggedIn && (

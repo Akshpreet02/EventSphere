@@ -64,6 +64,17 @@
     color: rgb(27, 27, 31);
 }
 
+.eventReviewsContainer {
+    text-align: center;
+    padding: 15px 0;
+    margin: 10px 200px;
+}
+
+.eventReviewsContainer h3 {
+    text-align: start;
+    font-size: 20px;
+}
+
 .buttonContainer {
     text-align: center;
     font-size: 20px;
