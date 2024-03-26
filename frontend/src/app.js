@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './components/header/Header';
 import { UserContextProvider } from './UserContext';
 import Home from './pages/home/Home';
-import Browse from './pages/browse/Browse';
 import Create from './pages/create/Create';
 import Account from './pages/account/Account';
 import MyEvents from './pages/myevents/MyEvents';
@@ -41,7 +40,6 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          {/* <Route path='/browse' element={<Browse />} /> */}
           <Route path='/create' element={<Create />} />
           <Route path='/account' element={<Account />} />
           <Route path='/myevents' element={<MyEvents />} />

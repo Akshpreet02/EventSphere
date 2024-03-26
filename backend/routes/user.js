@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { User } = require("../db/index.js");
+const { sendEmail } = require('../mail/mailer');
 
 router.get("/getUsers", async(req, res) => {
     console.log("Getting users from the backend")
@@ -24,9 +25,16 @@ router.post("/addUser", async(req, res) => {
             full_name: payLoad.full_name,
             role: payLoad.role
         })
+
+        // Define the email subject and body
+        const subject = "Welcome to EventSphere!";
+        const textBody = `Hello ${payLoad.full_name},\n\nWelcome to our platform! Your account has been created successfully. Your username is: ${payLoad.username}.\n\nBest regards,\nThe Team`;
+        
+        // Send the welcome email
+        await sendEmail(payLoad.email, subject, textBody);
     
         res.status(200).json({
-            msg: "User created"
+            msg: "User created and email sent"
         })
     } catch(error) {
         console.error("Error creating user", error);
@@ -34,7 +42,6 @@ router.post("/addUser", async(req, res) => {
             msg: "Failed to create user due to an internal error."
         });
     }
-    
 })
 
 router.post('/login', async (req, res) => {
