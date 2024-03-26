@@ -106,7 +106,8 @@ function EditEvent() {
 
 
     return (
-        <div>
+        <div className={styles.editBackground}>
+        <div className={styles.editevents}>
             <h1>Edit Event</h1>
                 <form onSubmit={handleEdit}>
                     <div className={styles.formGroup}>
@@ -185,9 +186,10 @@ function EditEvent() {
                     <input type="text" id="ticketUrl" name="ticketUrl" value={ticketURL} onChange={(e) => setTicketURL(e.target.value)} />
                     </div>
 
-                    <button type="Edit" className={styles.createButton}>Edit Event</button>
+                    <button type="Edit" className={styles.editButton}>Edit Event</button>
                     
                 </form>
+        </div>
         </div>
     )
 }

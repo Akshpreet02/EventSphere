@@ -162,33 +162,70 @@ function Event() {
   }  
 
   return (
-    <div className={styles.eventContainer}>
-      <h1>{eventData.event.event_name}</h1>
-      {eventData.event.image_url && (
-        <img className={styles.eventImage} src={eventData.event.image_url} alt={eventData.event.event_name} />
-      )}
-      <p>Description: {eventData.event.description}</p>
-      <p>Location: {eventData.event.venue}</p>
-      <p>
-        {/*If dates are the same, only display one. Otherwise display the start and end date. */}
-        {eventData.event.start_date === eventData.event.end_date 
-          ? `Date: ${formatDate(eventData.event.start_date)}` 
-          : `Runs From: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
-      </p>
+    <div className={styles.eventpage}>
+      <div className={styles.eventContainer}>
 
-      {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
-        <button onClick={handleRSVP}>RSVP for this event.</button>
-      )}
+        <div className={styles.eventImgContainer}>
+          <h1>{eventData.event.event_name}</h1>
+          {eventData.event.image_url && (
+            <img className={styles.eventImage} src={eventData.event.image_url} alt={eventData.event.event_name} />
+          )}
+        </div>
 
-      {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === true && userID && (   //checks for displaying the rsvp button.
-        <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
-      )}
+        <div className={styles.eventBodyContainer}>
 
-      {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
-        <button onClick={() => navigate(`/edit-event/${eventId}`)}>
-          Edit Event
-        </button>
-      )}
+          <div className={styles.eventDescLocContainer}>
+            <div>
+              <h2>{eventData.event.event_name}</h2>
+              <p>{eventData.event.description}</p>
+            </div>
+            <div>
+              <h2>Location:</h2>
+              <p>{eventData.event.venue}</p>
+            </div>
+          </div>
+
+          {/*If dates are the same, only display one. Otherwise display the start and end date. */}
+          <div className={styles.eventDateContainer}>
+          {eventData.event.start_date === eventData.event.end_date 
+                ? `Date: ${formatDate(eventData.event.start_date)}` 
+                : `Runs from: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
+          </div>
+
+          <div className={styles.eventReviewsContainer}>
+            <ul>
+              <h3>Reviews:</h3>
+              {eventData.event.reviews.map((review, index) => (
+                <li key={index}>
+                  <p>Review: {review.review}</p>
+                  <p>Rating: {review.rating}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div className={styles.buttonContainer}>
+            { eventData.event.rsvp_required && !isLoggedIn && (
+              <button onClick={() => navigate('/login')}>Login to RSVP for this event</button>
+            )}
+
+            {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
+              <button onClick={handleRSVP}>RSVP for this event.</button>
+            )}
+
+            {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === true && userID && (   //checks for displaying the rsvp button.
+              <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
+            )}
+
+            {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
+              <button onClick={() => navigate(`/edit-event/${eventId}`)}>
+                Edit Event
+              </button>
+            )}
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 }

@@ -57,20 +57,7 @@
   margin: 0;
 }
 
-.nav li:hover, .nav .dropdown li:hover {
+.nav li:hover {
   cursor: pointer;
   background-color: darkred;
-}
-
-.nav .dropdownContent {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  display: none;
-  white-space: nowrap;
-}
-
-.nav .dropdown:hover .dropdownContent {
-  display: flex;
-  flex-direction: column;
 }

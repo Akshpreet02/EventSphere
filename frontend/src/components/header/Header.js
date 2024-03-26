@@ -34,58 +34,38 @@ const Header = () => {
                 Home
               </li>
             </Link>
-            {/* <Link to='/browse' className={styles.list}>
-              <li>
-                Browse
-              </li>
-            </Link> */}
-            {isLoggedIn && userRole === 'organizer' &&(
+            {isLoggedIn && userRole === 'organizer' && (
               <Link to='/create' className={styles.list}>
-              <li>
-                Create
-              </li>
-            </Link>
-            )}
-            {/* {isLoggedIn && userRole === 'organizer' && (
-              <Link to='/manageevents' className={styles.list}>
                 <li>
-                  Manage
+                  Create
                 </li>
               </Link>
-            )} */}
-            {!!isLoggedIn && (   //what account looks like if user is logged in
-              <li className={styles.dropdown}>
-                <div className={styles.list}>
-                Account
-                    <ul className={styles.dropdownContent}>
-                      <Link to='/myevents'>
-                        <li className={styles.list}>
-                          <u>My Events</u>
-                        </li>
-                      </Link>
-                      <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
-                    </ul>
-                  </div>
-              </li>
             )}
-            {!isLoggedIn && ( //what account drop down looks like if not logged in
-              <li className={styles.dropdown}>
-                <div className={styles.list}>
-                Account
-                    <ul className={styles.dropdownContent}>
-                      <Link to='/login'>
-                        <li className={styles.list}>
-                          <u>Login</u>
-                        </li>
-                      </Link>
-                      <Link to='/signup'>
-                        <li className={styles.list}>
-                          <u>Sign Up</u>
-                        </li>
-                      </Link>
-                    </ul>
-                  </div>
-              </li> 
+            {isLoggedIn && (
+              <Link to='/myevents' className={styles.list}>
+                <li>
+                  My Events
+                </li>
+              </Link>
+            )}
+            {!isLoggedIn && (
+              <>
+                <Link to='/login' className={styles.list}>
+                  <li>
+                    Login
+                  </li>
+                </Link>
+                <Link to='/signup' className={styles.list}>
+                  <li>
+                    Sign Up
+                  </li>
+                </Link>
+              </>
+            )}
+            {isLoggedIn && (
+              <li className={styles.list} onClick={handleLogout}>
+                Logout
+              </li>
             )}
           </ul>
         </div>

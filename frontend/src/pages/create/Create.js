@@ -80,6 +80,7 @@ function Create() {
   }
 
   return (
+    <div className={styles.createBackground}>
     <div className={styles.create}>
       <h1>Create Event</h1>
       <form onSubmit={handleSubmit}>
@@ -163,6 +164,7 @@ function Create() {
         <button type="submit" className={styles.createButton}>Create Event</button>
         
       </form>
+    </div>
     </div>
   );
 }
