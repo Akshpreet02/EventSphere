@@ -46,13 +46,13 @@ const Header = () => {
               </li>
             </Link>
             )}
-            {isLoggedIn && userRole === 'organizer' && (
+            {/* {isLoggedIn && userRole === 'organizer' && (
               <Link to='/manageevents' className={styles.list}>
                 <li>
                   Manage
                 </li>
               </Link>
-            )}
+            )} */}
             {!!isLoggedIn && (   //what account looks like if user is logged in
               <li className={styles.dropdown}>
                 <div className={styles.list}>

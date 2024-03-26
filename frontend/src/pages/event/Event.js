@@ -184,7 +184,7 @@ function Event() {
         <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
       )}
 
-      {userRole === 'organizer' && isLoggedIn && userID && (
+      {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
         <button onClick={() => navigate(`/edit-event/${eventId}`)}>
           Edit Event
         </button>

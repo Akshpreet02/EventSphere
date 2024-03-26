@@ -212,7 +212,59 @@ router.post("/addEvent", async (req, res) => {
     }
 })
 
+router.put('/editEvent', async(req, res) => {
+    const {
+        eventId,
+        event_name,
+        description,
+        start_time,
+        end_time,
+        start_date,
+        end_date,
+        venue,
+        organizer,
+        status,
+        rsvp_required,
+        image_url,
+        organizer_url,
+        ticket_url
+    } = req.body;
 
+    if (!eventId) {
+        return res.status(400).json({ message: "Event ID must be provided" });
+    }
+    
+    try {
+        const updatedEvent = await Event.findOneAndUpdate(
+            {_id: eventId},
+            {
+                event_name,
+                description,
+                start_time,
+                end_time,
+                start_date,
+                end_date,
+                venue,
+                organizer,
+                status,
+                rsvp_required,
+                image_url,
+                organizer_url,
+                ticket_url
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedEvent) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+
+        res.status(200).json(updatedEvent);
+    } catch (error) {
+        console.error('Error updating the event:', error);
+        res.status(500).json({ message: 'Error updating the event', error: error.message });
+    }
+})
 
 module.exports = router;
 
