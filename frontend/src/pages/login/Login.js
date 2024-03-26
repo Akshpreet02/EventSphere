@@ -4,6 +4,7 @@ import styles from './login.module.css';
 import { UserContext } from "../../UserContext.jsx";
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -82,29 +83,31 @@ function Login() {
 
   return (
     <div className={styles.login}>
+      <div className={styles.loginContainer}>
+        <h1>Login</h1>
 
-      <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="username">Username: </label>
-          <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="username">Username: </label>
+            <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} />
+          </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="password">Password: </label>
-          <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="password">Password: </label>
+            <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} />
+          </div>
 
-        <div className={styles.signupLink}>
-          Don't have an account? <a href="/signup">Signup</a>
-        </div>
+          <div className={styles.signupLink}>
+            Don't have an account? <a href="/signup">Signup</a>
+          </div>
 
-        <button type="submit" className={styles.loginButton}>Login</button>
+          <button type="submit" className={styles.loginButton}>Login</button>
 
-      </form>
-      
-      <button className={styles.googleButton}>Login with Google</button>
+        </form>
+      </div>
     </div>
+
   );
 }
 
