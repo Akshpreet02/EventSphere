@@ -76,43 +76,45 @@ function Signup() {
 
   return (
     <div className={styles.signup}>
+      <div className={styles.signupContainer}>
+        <h1>Signup</h1>
     
-      <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="username">Username:</label>
-          <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} required />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="username">Username:</label>
+            <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} required />
+          </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" value={email} onChange={handleEmailChange} required />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" name="email" value={email} onChange={handleEmailChange} required />
+          </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="role">Role:</label>
-          <input type="role" id="role" name="role" value={role} onChange={handleRoleChange} required />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="role">Role:</label>
+            <input type="role" id="role" name="role" value={role} onChange={handleRoleChange} required />
+          </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} required />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="password">Password:</label>
+            <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} required />
+          </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} required />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} required />
+          </div>
 
-        <div className={styles.signupLink}>
-          Already have an account? <a href="/login">Login</a>
-        </div>
+          <div className={styles.loginLink}>
+            Already have an account? <a href="/login">Login</a>
+          </div>
 
-        <button type="submit" className={styles.signupButton}>Signup</button>
+          <button type="submit" className={styles.signupButton}>Signup</button>
 
-      </form>
-    
-      <button className={styles.googleButton}>Signup with Google</button>
+        </form>
+      
+      </div>
     </div>
   );
 }
