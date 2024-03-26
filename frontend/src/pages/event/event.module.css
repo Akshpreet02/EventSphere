@@ -1,0 +1,65 @@
+.eventContainer {
+    margin: 20px auto;
+    padding: 20px;
+    width: 50%;
+    border: 1px solid black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.eventInfo {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px auto;
+}
+
+.eventContainer h1 {
+    text-align: start;
+    margin: 5px;
+}
+
+.eventContainer p {
+    font-size: 20px;
+    margin: 5px;
+}
+
+.eventImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 5px 0;
+    border-bottom: solid 1px black;
+}
+
+.eventLink {
+    margin-bottom: 20px;
+}
+
+.eventLink a {
+    color: blue;
+}
+
+.eventButton {
+    background-color: #077efd;
+    color: white;
+    padding: 10px 56px;
+    cursor: pointer;
+}
+
+.eventButton, .eventButton {
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    border: none;
+    opacity: 0.9;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.eventButton:hover {
+    transform: translateY(-3px);
+    opacity: 1;
+}
