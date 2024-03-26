@@ -93,7 +93,10 @@ function Signup() {
 
           <div className={styles.formGroup}>
             <label htmlFor="role">Role:</label>
-            <input type="role" id="role" name="role" value={role} onChange={handleRoleChange} required />
+            <select id="role" name="role" value={role} onChange={handleRoleChange} required>
+              <option value="attendee">Attendee</option>
+              <option value="organizer">Organizer</option>
+            </select>
           </div>
 
           <div className={styles.formGroup}>
