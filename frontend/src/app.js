@@ -37,7 +37,7 @@ function App() {
   return (
     <UserContextProvider>
     <Router>
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
