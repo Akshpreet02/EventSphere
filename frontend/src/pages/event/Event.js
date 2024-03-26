@@ -162,33 +162,43 @@ function Event() {
   }  
 
   return (
-    <div className={styles.eventContainer}>
-      <h1>{eventData.event.event_name}</h1>
-      {eventData.event.image_url && (
-        <img className={styles.eventImage} src={eventData.event.image_url} alt={eventData.event.event_name} />
-      )}
-      <p>Description: {eventData.event.description}</p>
-      <p>Location: {eventData.event.venue}</p>
-      <p>
-        {/*If dates are the same, only display one. Otherwise display the start and end date. */}
-        {eventData.event.start_date === eventData.event.end_date 
-          ? `Date: ${formatDate(eventData.event.start_date)}` 
-          : `Runs From: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
-      </p>
+    <div className={styles.eventpage}>
+      <div className={styles.eventContainer}>
+        <div className={styles.eventImgContainer}>
+        
+  
+          <h1>{eventData.event.event_name}</h1>
+          {eventData.event.image_url && (
+            <img className={styles.eventImage} src={eventData.event.image_url} alt={eventData.event.event_name} />
+          )}
+        </div>
+  
+        <p>Description: {eventData.event.description}</p>
+        <p>Location: {eventData.event.venue}</p>
+        <p>
+          {/*If dates are the same, only display one. Otherwise display the start and end date. */}
+          <div className={styles.eventDateContainer}>
+          {eventData.event.start_date === eventData.event.end_date 
+                ? `${formatDate(eventData.event.start_date)}` 
+                : `${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
+          </div>
 
-      {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
-        <button onClick={handleRSVP}>RSVP for this event.</button>
-      )}
+        </p>
 
-      {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === true && userID && (   //checks for displaying the rsvp button.
-        <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
-      )}
+        {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
+          <button onClick={handleRSVP}>RSVP for this event.</button>
+        )}
 
-      {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
-        <button onClick={() => navigate(`/edit-event/${eventId}`)}>
-          Edit Event
-        </button>
-      )}
+        {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === true && userID && (   //checks for displaying the rsvp button.
+          <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
+        )}
+
+        {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
+          <button onClick={() => navigate(`/edit-event/${eventId}`)}>
+            Edit Event
+          </button>
+        )}
+      </div>
     </div>
   );
 }
