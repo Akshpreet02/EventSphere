@@ -357,7 +357,7 @@ router.delete('/deleteEvent', async (req, res) => {
 
     try {
         // First, find the event to ensure it exists and to check the organizer's ID
-        const eventToDelete = await Event.findById(eventId);
+        const eventToDelete = await Event.findById(eventId).populate('RSVPs.user', 'email');;
 
         if (!eventToDelete) {
             return res.status(404).json({ message: "Event not found" });
@@ -368,6 +368,21 @@ router.delete('/deleteEvent', async (req, res) => {
             // Respond with an unauthorized error if the user is not the organizer
             return res.status(403).json({ message: "User is not authorized to delete this event" });
         }
+
+        const RSVPedUsers = eventToDelete.RSVPs;
+
+        // Email content
+        const subject = "Event Cancelled";
+        const textBody = `We regret to inform you that the event '${eventToDelete.event_name}' has been cancelled. We apologize for any inconvenience this may cause.`;
+
+        // Send an email to all RSVPed users
+        const emailPromises = RSVPedUsers.map(rsvp => {
+            const userEmail = rsvp.user.email; // Assuming the email is populated
+            return sendEmail(userEmail, subject, textBody);
+        });
+
+        // Wait for all emails to be sent before deleting the event
+        await Promise.all(emailPromises);
 
         // If the user is the organizer, delete the event
         await Event.findByIdAndDelete(eventId);
