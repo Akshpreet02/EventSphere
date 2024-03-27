@@ -8,33 +8,15 @@ const mongoose = require('mongoose');
 
 const eventRouter = require("./routes/event")
 const userRouter = require("./routes/user")
+const resetRouter = require("./routes/reset")
 
 app.use(express.json());
 app.use(cors());  //make sure you have this before you hit your routes using the app.use(router logic stuff)
 app.use("/event", eventRouter)
 app.use("/user", userRouter)
+app.use("/reset", resetRouter)
 
 mongoose.connect('mongodb+srv://admin:LYDHCmW2RrFiaWW7@cluster0.kw0emyr.mongodb.net/EventSphere')
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/Images');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname));
-    }
-});
-
-const upload = multer({
-    storage: storage
-});
-
-app.post('/upload', upload.single('file'), (req, res) => {
-    console.log(req.file.filename)
-    Event.create({image: req.file.filename})
-    .then(result => res.json(result))
-    .catch(err => console.log(err))
-})
 
 app.use((err, req, res, next) => {   //global catch to prevent showing backend logic to the frontend
     console.error(err.stack); // Log error stack for debugging

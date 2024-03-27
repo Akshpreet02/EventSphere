@@ -144,6 +144,40 @@ function Event() {
     }
   }
 
+  const handleDeleteEvent = async () => {
+    if(!isLoggedIn) {
+      console.error("User must be logged in to RSVP");
+      return;
+    }
+
+    const payload = {
+      "eventId": eventId,
+      "userID": userID
+    }
+    
+    try {
+      const response = await fetch('http://localhost:3001/event/deleteEvent', {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json',
+              // Include any authentication tokens if needed
+          },
+          body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+          // If the server response is not ok, throw an error
+          throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log(data.message);
+      navigate('/myevents')
+    } catch (error) {
+        console.error('Error deleting the event:', error);
+    }
+  }
+
   // Move to separate js file for modularity
   function formatDate(dateString) {
     if (/^\d{8}$/.test(dateString)) {
@@ -197,6 +231,7 @@ function Event() {
               <h3>Reviews:</h3>
               {eventData.event.reviews.map((review, index) => (
                 <li key={index}>
+                  <p>Reviewer: {review.username}</p>
                   <p>Review: {review.review}</p>
                   <p>Rating: {review.rating}</p>
                 </li>
@@ -206,7 +241,7 @@ function Event() {
           
           <div className={styles.buttonContainer}>
             { eventData.event.rsvp_required && !isLoggedIn && (
-              <button onClick={() => navigate('/login')}>Login to RSVP for this event</button>
+              <button onClick={() => navigate('/login')}>Login to RSVP for this event or review it.</button>
             )}
 
             {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
@@ -217,10 +252,20 @@ function Event() {
               <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
             )}
 
+            {userRole === 'attendee' && isLoggedIn && userID && (
+              <button onClick={() => navigate(`/add-review/${eventId}/${userID}`)}>
+                Add Review
+              </button>
+            )}
+
             {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
               <button onClick={() => navigate(`/edit-event/${eventId}`)}>
                 Edit Event
               </button>
+            )}
+
+            {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
+              <button onClick={handleDeleteEvent}>Delete Event</button>
             )}
           </div>
 

@@ -10,8 +10,6 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendEmail = async (to, subject, textBody) => {
-    console.log(process.env.NODEMAILER_username);
-    console.log(process.env.PASSWORD);
     const mailOptions = {
       from: '"EventSphere" eventspherenotification@gmail.com', // The sender's email address
       to, // The recipient's email address

@@ -7,7 +7,6 @@ import styles from './editevents.module.css';
 
 function EditEvent() {
     const [eventName, setEventName] = useState('');
-    const [setError] = useState('');
     const [eventDescription, setEventDescription] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
@@ -55,7 +54,6 @@ function EditEvent() {
                 setTicketURL(event.ticketURL);
             } catch (error) {
                 console.error('Fetch error:', error);
-                // setError(error.message); // Uncomment and use this when you fix the state setup for error
             }
         };
 
@@ -99,9 +97,8 @@ function EditEvent() {
             }
             navigate('/myevents');
           } catch (err) {
-            setError(err.message);
+            console.error(err.message);
           }
-        
     }
 
 
@@ -160,16 +157,6 @@ function EditEvent() {
                         <input type="checkbox" checked={requireRSVP} onChange={() => setRequireRSVP(!requireRSVP)} />
                     </label>
                     </div>
-
-                    {/* <div className={styles.formGroup}>
-                    <label htmlFor="imageFile">Upload Image:</label>
-                    <input type="file" id="imageFile" name="imageFile" accept="image/*" onChange={handleFileChange} required />
-                    </div> */}
-
-                    {/* <div className={styles.formGroup}>
-                    <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-                    <button onClick={handleUpload}>Upload Image</button>
-                    </div> */}
 
                     <div className={styles.formGroup}>
                     <label htmlFor="imageURL">Image URL:</label>
