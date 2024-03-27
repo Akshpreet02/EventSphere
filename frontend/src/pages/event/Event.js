@@ -240,12 +240,6 @@ function Event() {
               <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
             )}
 
-            {userRole === 'attendee' && isLoggedIn && userID && (
-              <button onClick={() => navigate(`/add-review/${eventId}/${userID}`)}>
-                Add Review
-              </button>
-            )}
-
             {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
               <button onClick={() => navigate(`/edit-event/${eventId}`)}>
                 Edit Event
