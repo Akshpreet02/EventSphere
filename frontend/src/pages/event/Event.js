@@ -144,6 +144,40 @@ function Event() {
     }
   }
 
+  const handleDeleteEvent = async () => {
+    if(!isLoggedIn) {
+      console.error("User must be logged in to RSVP");
+      return;
+    }
+
+    const payload = {
+      "eventId": eventId,
+      "userID": userID
+    }
+    
+    try {
+      const response = await fetch('http://localhost:3001/event/deleteEvent', {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json',
+              // Include any authentication tokens if needed
+          },
+          body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+          // If the server response is not ok, throw an error
+          throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log(data.message);
+      navigate('/myevents')
+    } catch (error) {
+        console.error('Error deleting the event:', error);
+    }
+  }
+
   // Move to separate js file for modularity
   function formatDate(dateString) {
     if (/^\d{8}$/.test(dateString)) {
@@ -218,16 +252,20 @@ function Event() {
               <button onClick={handleUnRSVP}>un-RSVP for this event.</button>
             )}
 
+            {userRole === 'attendee' && isLoggedIn && userID && (
+              <button onClick={() => navigate(`/add-review/${eventId}/${userID}`)}>
+                Add Review
+              </button>
+            )}
+
             {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
               <button onClick={() => navigate(`/edit-event/${eventId}`)}>
                 Edit Event
               </button>
             )}
 
-            {userRole === 'attendee' && isLoggedIn && userID && (
-              <button onClick={() => navigate(`/add-review/${eventId}/${userID}`)}>
-                Add Review
-              </button>
+            {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
+              <button onClick={handleDeleteEvent}>Delete Event</button>
             )}
           </div>
 

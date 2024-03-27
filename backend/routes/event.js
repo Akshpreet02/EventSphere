@@ -352,5 +352,32 @@ router.put('/review', async (req, res) => {
     }
 })
 
+router.delete('/deleteEvent', async (req, res) => {
+    const {userID, eventId} = req.body;
+
+    try {
+        // First, find the event to ensure it exists and to check the organizer's ID
+        const eventToDelete = await Event.findById(eventId);
+
+        if (!eventToDelete) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+
+        // Check if the requesting user is the organizer of the event
+        if (eventToDelete.organizer.toString() !== userID) {
+            // Respond with an unauthorized error if the user is not the organizer
+            return res.status(403).json({ message: "User is not authorized to delete this event" });
+        }
+
+        // If the user is the organizer, delete the event
+        await Event.findByIdAndDelete(eventId);
+
+        res.status(200).json({ message: "Event deleted successfully" });
+    } catch (error) {
+        console.error('Error deleting the event:', error);
+        res.status(500).json({ message: 'Error deleting the event', error: error.message });
+    }
+})
+
 module.exports = router;
 
