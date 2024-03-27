@@ -14,7 +14,7 @@ function ForgotPassword() {
         setMessage('');
 
         try {
-            const response = await fetch('http://localhost:3001/forgotPassword', {
+            const response = await fetch('http://localhost:3001/reset/forget', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ function ForgotPassword() {
             } else {
                 setMessage(data.message || 'An error occurred. Please try again.');
             }
-            navigate('/home');
+            navigate('/');
         } catch (error) {
             setMessage('An error occurred. Please try again.');
         }
@@ -39,7 +39,7 @@ function ForgotPassword() {
         setMessage('');
 
         try {
-            const response = await fetch('http://localhost:3001/resetPassword', {
+            const response = await fetch('http://localhost:3001/reset/resetPassword', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ function ForgotPassword() {
             } else {
                 setMessage(data.message || 'Failed to reset password. Please try again.');
             }
-            navigate('/home');
+            navigate('/');
         } catch (error) {
             setMessage('Failed to reset password. Please try again.');
         }

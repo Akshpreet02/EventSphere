@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './addreview.module.css';
 
-function AddReview({ eventId, userID }) {
+function AddReview({ eventId, userID, userRole }) {
     const [reviewText, setReviewText] = useState('');
     const [reviewRating, setReviewRating] = useState('1');
     const [showReviewForm, setShowReviewForm] = useState(false);
@@ -56,9 +56,12 @@ function AddReview({ eventId, userID }) {
     return (
         <div>
             {/* Button to toggle the visibility of the review form */}
-            <button onClick={() => setShowReviewForm(!showReviewForm)} className={styles.toggleReviewButton}>
-                {showReviewForm ? 'Hide' : 'Leave a Review'}
-            </button>
+            {userRole === 'attendee' && (
+                <button onClick={() => setShowReviewForm(!showReviewForm)} className={styles.toggleReviewButton}>
+                    {showReviewForm ? 'Hide' : 'Leave a Review'}
+                </button>
+                )
+            }
             {showReviewForm && (
                 <form onSubmit={handleSubmitReview} className={styles.addReview}>
                     <div>
