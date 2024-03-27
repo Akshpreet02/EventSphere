@@ -225,19 +225,6 @@ function Event() {
                 ? `Date: ${formatDate(eventData.event.start_date)}` 
                 : `Runs from: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
           </div>
-
-          <div className={styles.eventReviewsContainer}>
-            <ul>
-              <h3>Reviews:</h3>
-              {eventData.event.reviews.map((review, index) => (
-                <li key={index}>
-                  <p>Reviewer: {review.username}</p>
-                  <p>Review: {review.review}</p>
-                  <p>Rating: {review.rating}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
           
           <div className={styles.buttonContainer}>
             { eventData.event.rsvp_required && !isLoggedIn && (
@@ -267,6 +254,34 @@ function Event() {
             {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
               <button onClick={handleDeleteEvent}>Delete Event</button>
             )}
+          </div>
+
+          <div className={styles.eventReviewsContainer}>
+            <h3>Reviews:</h3>
+            <ul>
+              {eventData.event.reviews.map((review, index) => (
+                <li key={index}>
+                  <div className={styles.reviewHeader}>
+                    <p className={styles.reviewUsername}>{review.username}</p>
+                    <span>
+                      {Array.from({ length: 5 }, (_, index) => (
+                        <span key={index}>
+                          {index < review.rating ? (
+                            <span className={styles.reviewStar}>&#9733;</span>
+                          ) : (
+                            <span className={styles.reviewStar}>&#9734;</span>
+                          )}
+                        </span>
+                      ))}
+                    </span>
+
+
+                  </div>
+                  <p>"{review.review}"</p>
+                  
+                </li>
+              ))}
+            </ul>
           </div>
 
         </div>
