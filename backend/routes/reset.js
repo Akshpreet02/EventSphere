@@ -34,4 +34,39 @@ router.post('/forget', async (req, res) => {
     }
 })
 
+router.post('/resetPassword', async (req, res) => {
+    const { email, resetCode, newPassword } = req.body;
+
+    try {
+        // Find the user by email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        // Find the reset code document for this user
+        const passwordResetDoc = await PasswordReset.findOne({
+            user: user._id,
+            resetCode: resetCode,
+            expiration: { $gt: Date.now() } // Check if the code hasn't expired
+        });
+
+        if (!passwordResetDoc) {
+            return res.status(400).json({ message: "Invalid or expired reset code." });
+        }
+
+        // Reset code is valid, proceed to reset the password
+        user.password = newPassword; // Here, you should hash the new password before saving
+        await user.save();
+
+        // The password has been updated, the reset code should be invalidated
+        await PasswordReset.deleteOne({ _id: passwordResetDoc._id });
+
+        res.json({ message: "Your password has been reset successfully." });
+    } catch (error) {
+        console.error('Error resetting the password:', error);
+        res.status(500).json({ message: 'Error resetting the password', error: error.message });
+    }
+});
+
 module.exports = router;
