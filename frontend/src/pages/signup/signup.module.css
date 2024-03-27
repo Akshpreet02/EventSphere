@@ -16,6 +16,7 @@
     border-radius: 5px;
     padding: 10px;
     align-items: center;
+    margin-bottom: 80px;
 }
 
 h1 {
@@ -34,8 +35,7 @@ h1 {
 }
 
 select {
-    width: 100%;
-    font-size: 18px;
+    width: 85%;
 }
 
 .signupLink {
