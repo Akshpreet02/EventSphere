@@ -66,7 +66,7 @@ function Login() {
       console.log(err.message);
     }
 
-    if(data && (data.userFound == true)) {
+    if(data && (data.userFound === true)) {
       setIsLoggedIn(true);
       setUserID(data.id);
       setUserRole(data.role);
@@ -79,6 +79,10 @@ function Login() {
     //making it empty
     setUsername('');
     setPassword('');
+  };
+
+  const handleForgotPasswordClick = () => {
+    navigate('/forgot-password');
   };
 
   return (
@@ -100,6 +104,12 @@ function Login() {
 
           <div className={styles.signupLink}>
             Don't have an account? <a href="/signup">Signup</a>
+          </div>
+
+          <div className={styles.forgotPasswordLink}>
+            <button type="button" onClick={handleForgotPasswordClick} className={styles.forgotPasswordButton}>
+              Forgot Password?
+            </button>
           </div>
 
           <button type="submit" className={styles.loginButton}>Login</button>
