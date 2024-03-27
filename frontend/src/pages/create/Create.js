@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 function Create() {
   const [eventName, setEventName] = useState('');
-  const [setError] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -23,20 +22,6 @@ function Create() {
   const[organizerURL, setOrganizerURL] = useState('');
   const[ticketURL, setTicketURL] = useState('');
   const navigate = useNavigate(); // Hook to get the navigate function
-
-
-  // const handleUpload = (e) => {
-  //   const formdata = new FormData();
-  //   formdata.append('file', file)
-  //   axios.post('http://localhost:3001/upload', formdata)
-  //   .then(res => {console.log(res)})
-  //   .catch(err => {console.log(err)})
-  // }
-
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   setImageFile(file);
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,7 +60,7 @@ function Create() {
       }
       navigate('/myevents');
     } catch (err) {
-      setError(err.message);
+      console.error(err.message);
     }
   }
 

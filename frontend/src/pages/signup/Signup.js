@@ -8,7 +8,8 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('attendee');
+  const [full_name, setFull_Name] = useState('');
   const navigate = useNavigate(); // Hook to get the navigate function
 
   // Update values for username, email, password, and confirm password
@@ -32,9 +33,14 @@ function Signup() {
     setConfirmPassword(e.target.value);
   };
 
+  const handleFullNameChange = (e) => {
+    setFull_Name(e.target.value)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(role);
     // Temp
     console.log('Username:', username);
     console.log('Email:', email);
@@ -45,7 +51,7 @@ function Signup() {
       "username": username,
       "password": password,
       "email": email,
-      "full_name": confirmPassword,
+      "full_name": full_name,
       "role": role
     }
     try {
@@ -66,6 +72,7 @@ function Signup() {
     alert("Redirecting to the Login page.\n Use your new credentials to sign in.")
     
     //emptying after sign up
+    setFull_Name('');
     setUsername('');
     setEmail('');
     setPassword('');
@@ -84,6 +91,11 @@ function Signup() {
           <div className={styles.formGroup}>
             <label htmlFor="username">Username:</label>
             <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} required />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" value={full_name} onChange={handleFullNameChange} required />
           </div>
 
           <div className={styles.formGroup}>

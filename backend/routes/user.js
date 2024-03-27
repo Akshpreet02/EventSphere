@@ -17,6 +17,7 @@ router.post("/addUser", async(req, res) => {
     console.log("Posting user to backend")
 
     const payLoad = req.body;
+    console.log('Heres the user payload',payLoad)
     try {
         await User.create({
             username: payLoad.username,
@@ -28,7 +29,7 @@ router.post("/addUser", async(req, res) => {
 
         // Define the email subject and body
         const subject = "Welcome to EventSphere!";
-        const textBody = `Hello ${payLoad.full_name},\n\nWelcome to our platform! Your account has been created successfully. Your username is: ${payLoad.username}.\n\nBest regards,\nThe Team`;
+        const textBody = `Hello ${payLoad.full_name},\n\nWelcome to our platform! Your account has been created successfully as a ${payLoad.role}. Your username is: ${payLoad.username}.\n\nBest regards,\nThe Team`;
         
         // Send the welcome email
         await sendEmail(payLoad.email, subject, textBody);
