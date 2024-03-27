@@ -40,10 +40,28 @@ const eventSchema = new mongoose.Schema({
   ticket_url: { type: String}
 });
 
+const passwordResetSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  resetCode: {
+    type: String,
+    required: true
+  },
+  expiration: {
+    type: Date,
+    required: true
+  }
+});
+
 const User = mongoose.model('User', userSchema);
 const Event = mongoose.model('Event', eventSchema);
+const PasswordReset = mongoose.model('PasswordReset', passwordResetSchema);
 
 module.exports = {
     User,
     Event,
+    PasswordReset
 }
