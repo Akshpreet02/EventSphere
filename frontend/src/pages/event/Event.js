@@ -198,7 +198,6 @@ function Event() {
               {eventData.event.reviews.map((review, index) => (
                 <li key={index}>
                   <p>Review: {review.review}</p>
-                  <p>Rating: {review.rating}</p>
                 </li>
               ))}
             </ul>

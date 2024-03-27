@@ -49,10 +49,6 @@ function MyEvents() {
     <div className={styles.myevents}>
       <div className={styles.topRow}>
         <h1>My Events</h1>
-        <div className={styles.filter}>
-          <label htmlFor="searchInput" className={styles.label}>Search:</label>
-          <input type="text" id="searchInput" placeholder="..." className={styles.input}></input>
-        </div>
       </div>
       <div className={styles.eventlist}>
       {events.map((event, index) => (
