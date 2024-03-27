@@ -252,7 +252,7 @@ function Event() {
           </div>
 
           <div className={styles.eventReviewsContainer}>
-            <AddReview />
+            <AddReview eventId={eventId} userID={userID} />
             <h3>Reviews from other Attendees:</h3>
             <ul>
               {eventData.event.reviews.map((review, index) => (
