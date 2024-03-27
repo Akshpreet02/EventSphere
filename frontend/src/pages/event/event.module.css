@@ -69,6 +69,7 @@
     margin: 10px 250px;
 }
 
+
 .eventReviewsContainer ul, li {
     list-style-type: none;
 }
@@ -76,7 +77,10 @@
 .eventReviewsContainer ul {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
     gap: 50px;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .eventReviewsContainer li {

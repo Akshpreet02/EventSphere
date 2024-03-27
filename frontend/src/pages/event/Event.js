@@ -4,6 +4,7 @@ import styles from './event.module.css';
 import { UserContext } from "../../UserContext.jsx";
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AddReview from '../add-review/AddReview.js';
 
 
 function Event() {
@@ -257,7 +258,8 @@ function Event() {
           </div>
 
           <div className={styles.eventReviewsContainer}>
-            <h3>Reviews:</h3>
+            <AddReview />
+            <h3>Reviews from other Attendees:</h3>
             <ul>
               {eventData.event.reviews.map((review, index) => (
                 <li key={index}>
