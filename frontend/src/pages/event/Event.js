@@ -12,6 +12,7 @@ function Event() {
   const { userRole, userID, isLoggedIn } = useContext(UserContext);
   const [eventData, setEventData] = useState(null);
   const [hasRSVPd, setHasRSVPd] = useState(false);
+  const [numOfRSVPs, setNumOfRSVPs] = useState(0);
   const navigate = useNavigate(); // Hook to get the navigate function
 
   console.log("In event")
@@ -31,6 +32,7 @@ function Event() {
         }
         const data = await response.json();
         setEventData(data);
+        setNumOfRSVPs(eventData.event.RSVPs.length);
       } catch (error) {
         console.error("Couldnt fetch event data", error);
       }
@@ -39,7 +41,7 @@ function Event() {
     if(eventId) {
       fetchEventData();
     }
-  }, [eventId])
+  }, [eventId, numOfRSVPs])
 
   //useeffect to check whether or not the attendee has already rsvped.
   useEffect(() => {
@@ -225,6 +227,10 @@ function Event() {
           {eventData.event.start_date === eventData.event.end_date 
                 ? `Date: ${formatDate(eventData.event.start_date)}` 
                 : `Runs from: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
+          </div>
+            The number of people that have registered for your event is: {numOfRSVPs}
+          <div>
+
           </div>
           
           <div className={styles.buttonContainer}>
