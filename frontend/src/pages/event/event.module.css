@@ -65,14 +65,51 @@
 }
 
 .eventReviewsContainer {
-    text-align: center;
     padding: 15px 0;
-    margin: 10px 200px;
+    margin: 10px 250px;
+}
+
+
+.eventReviewsContainer ul, li {
+    list-style-type: none;
+}
+
+.eventReviewsContainer ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+    gap: 50px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.eventReviewsContainer li {
+    border-radius: 5px;
+    padding: 10px 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.eventReviewsContainer .reviewHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .eventReviewsContainer h3 {
     text-align: start;
     font-size: 20px;
+}
+
+.eventReviewsContainer .reviewUsername {
+    font-size: 20px;
+    margin: 0;
+}
+
+.reviewStar {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    color: rgb(231, 231, 150);
 }
 
 .buttonContainer {
