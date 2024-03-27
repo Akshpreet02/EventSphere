@@ -57,7 +57,7 @@ function AddReview() {
     
 
     return (
-        <form onSubmit={handleSubmitReview}>
+        <form onSubmit={handleSubmitReview} className={styles.addReview}>
             <div>
                 <label htmlFor="reviewText">Review:</label>
                 <textarea
@@ -67,22 +67,24 @@ function AddReview() {
                     required
                 />
             </div>
-            <div>
-                <label htmlFor="reviewRating">Rating:</label>
-                <select
-                    id="reviewRating"
-                    value={reviewRating}
-                    onChange={(e) => setReviewRating(e.target.value)}
-                    required
-                >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
+            <div className={styles.ratingButtonContainer}>
+                <div>
+                    <label htmlFor="reviewRating">Rating:</label>
+                    <select
+                        id="reviewRating"
+                        value={reviewRating}
+                        onChange={(e) => setReviewRating(e.target.value)}
+                        required
+                    >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
             <button type="submit">Submit Review</button>
+            </div>
         </form>
     )
 }
