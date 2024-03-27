@@ -8,6 +8,7 @@ import styles from './addreview.module.css';
 function AddReview() {
     const [reviewText, setReviewText] = useState('');
     const [reviewRating, setReviewRating] = useState('1'); // Default rating
+    const [showReviewForm, setShowReviewForm] = useState(false); // State to manage whether to show the review form or not
     const navigate = useNavigate(); // Hook to get the navigate function
     const { eventId, userID } = useParams();  //getting eventId from the eventcard.
 
@@ -57,35 +58,42 @@ function AddReview() {
     
 
     return (
-        <form onSubmit={handleSubmitReview} className={styles.addReview}>
-            <div>
-                <label htmlFor="reviewText">Review:</label>
-                <textarea
-                    id="reviewText"
-                    value={reviewText}
-                    onChange={(e) => setReviewText(e.target.value)}
-                    required
-                />
-            </div>
-            <div className={styles.ratingButtonContainer}>
-                <div>
-                    <label htmlFor="reviewRating">Rating:</label>
-                    <select
-                        id="reviewRating"
-                        value={reviewRating}
-                        onChange={(e) => setReviewRating(e.target.value)}
-                        required
-                    >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                </div>
-            <button type="submit">Submit Review</button>
-            </div>
-        </form>
+        <div>
+            <button onClick={() => setShowReviewForm(!showReviewForm)} className={styles.toggleReviewButton}>
+                {showReviewForm ? 'Hide' : 'Leave a Review'}
+            </button>
+            {showReviewForm && (
+                <form onSubmit={handleSubmitReview} className={styles.addReview}>
+                    <div>
+                        <label htmlFor="reviewText">Review:</label>
+                        <textarea
+                            id="reviewText"
+                            value={reviewText}
+                            onChange={(e) => setReviewText(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={styles.ratingButtonContainer}>
+                        <div>
+                            <label htmlFor="reviewRating">Rating:</label>
+                            <select
+                                id="reviewRating"
+                                value={reviewRating}
+                                onChange={(e) => setReviewRating(e.target.value)}
+                                required
+                            >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    <button type="submit">Submit Review</button>
+                    </div>
+                </form>
+            )}
+        </div>
     )
 }
 
