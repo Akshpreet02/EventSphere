@@ -32,16 +32,21 @@ function Event() {
         }
         const data = await response.json();
         setEventData(data);
-        setNumOfRSVPs(eventData.event.RSVPs.length);
       } catch (error) {
         console.error("Couldnt fetch event data", error);
       }
     }
-
     if(eventId) {
       fetchEventData();
     }
-  }, [eventId, numOfRSVPs])
+  }, [eventId])
+
+  useEffect(() => {
+    if (eventData && eventData.event && Array.isArray(eventData.event.RSVPs)) {
+      setNumOfRSVPs(eventData.event.RSVPs.length);
+    }
+  }, [eventData]);
+  
 
   //useeffect to check whether or not the attendee has already rsvped.
   useEffect(() => {
@@ -228,10 +233,11 @@ function Event() {
                 ? `Date: ${formatDate(eventData.event.start_date)}` 
                 : `Runs from: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
           </div>
+          {isLoggedIn && userRole === 'organizer' &&(
+            <div>
             The number of people that have registered for your event is: {numOfRSVPs}
-          <div>
-
           </div>
+          )}
           
           <div className={styles.buttonContainer}>
             { eventData.event.rsvp_required && !isLoggedIn && (
