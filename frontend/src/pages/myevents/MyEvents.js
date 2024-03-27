@@ -64,12 +64,3 @@ function MyEvents() {
 }
 
 export default MyEvents;
-
-
-{/* <div className={styles.eventlist}>
-      {featuredEvents.map((event, index) => (
-        <Link key={event.eventId} to={`/event/${event.eventId}`} className={styles.eventLink}>
-          <EventCard key={event.eventId} event={event} />
-        </Link>
-        ))}
-      </div> */}

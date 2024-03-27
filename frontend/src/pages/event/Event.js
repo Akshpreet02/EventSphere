@@ -197,7 +197,9 @@ function Event() {
               <h3>Reviews:</h3>
               {eventData.event.reviews.map((review, index) => (
                 <li key={index}>
+                  <p>Reviewer: {review.username}</p>
                   <p>Review: {review.review}</p>
+                  <p>Rating: {review.rating}</p>
                 </li>
               ))}
             </ul>
@@ -205,7 +207,7 @@ function Event() {
           
           <div className={styles.buttonContainer}>
             { eventData.event.rsvp_required && !isLoggedIn && (
-              <button onClick={() => navigate('/login')}>Login to RSVP for this event</button>
+              <button onClick={() => navigate('/login')}>Login to RSVP for this event or review it.</button>
             )}
 
             {userRole === 'attendee' && eventData.event.rsvp_required && isLoggedIn && hasRSVPd === false && userID && (   //checks for displaying the rsvp button.
@@ -219,6 +221,12 @@ function Event() {
             {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer && (
               <button onClick={() => navigate(`/edit-event/${eventId}`)}>
                 Edit Event
+              </button>
+            )}
+
+            {userRole === 'attendee' && isLoggedIn && userID && (
+              <button onClick={() => navigate(`/add-review/${eventId}/${userID}`)}>
+                Add Review
               </button>
             )}
           </div>

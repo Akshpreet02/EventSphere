@@ -67,5 +67,19 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.get('/getUser', async (req, res) => {
+    const { userID } = req.query;
+
+    try {
+        const userData = await User.findById(userID);
+
+        res.status(200).json({
+            "user": userData
+        })
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
 module.exports = router;
 

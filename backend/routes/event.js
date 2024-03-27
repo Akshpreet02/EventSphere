@@ -317,5 +317,40 @@ router.put('/editEvent', async(req, res) => {
     }
 })
 
+router.put('/review', async (req, res) => {
+    const { eventId, userId, reviewText, rating } = req.body;
+
+    try {
+        // Find the event to see if the user has already submitted a review
+        const event = await Event.findById(eventId);
+        const user = await User.findById(userId);
+
+        if (!event) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+
+        // Check if the user has already reviewed the event
+        const existingReviewIndex = event.reviews.findIndex(review => review.reviewer.equals(userId));
+
+        if (existingReviewIndex > -1) {
+            // Update existing review
+            event.reviews[existingReviewIndex].review = reviewText;
+            event.reviews[existingReviewIndex].rating = rating;
+            event.reviews[existingReviewIndex].username = user.username;
+        } else {
+            // Add a new review
+            event.reviews.push({ reviewer: userId,  username: user.username, review: reviewText, rating: rating });
+        }
+
+        // Save the updated event document
+        const updatedEvent = await event.save();
+
+        res.status(200).json({ message: "Review updated successfully", updatedEvent });
+    } catch (error) {
+        console.error('Error updating the review:', error);
+        res.status(500).json({ message: 'Error updating the review', error: error.message });
+    }
+})
+
 module.exports = router;
 

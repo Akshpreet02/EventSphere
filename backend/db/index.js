@@ -31,6 +31,7 @@ const eventSchema = new mongoose.Schema({
   }],
   reviews: [{
     reviewer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', _id: false},
+    username: {type: String},
     review: { type: String },
     rating: { type: Number, min: 1, max: 5 }
   }],

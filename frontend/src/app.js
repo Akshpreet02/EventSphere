@@ -10,7 +10,7 @@ import Signup from './pages/signup/Signup';
 import Footer from './components/footer/Footer';
 import Event from './pages/event/Event';
 import EditEvent from './pages/edit-event/EditEvent';
-import ManageEvents from './pages/manageevents/ManageEvents';
+import AddReview from './pages/add-review/AddReview'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -46,6 +46,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/event/:eventId' element={<Event />} />
+          <Route path='/add-review/:eventId/:userID' element={<AddReview />}/>
           {/* <Route path='/manageevents' element = {<ManageEvents/>} /> */}
           <Route path='/edit-event/:eventId' element={<EditEvent />}/>
         </Routes>
