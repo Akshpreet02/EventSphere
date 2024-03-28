@@ -22,5 +22,10 @@ npm run start
 ```
 
 Starting up the Back end
+
 ```bash
-cd backend```
+cd backend
+echo "NODEMAILER_username=eventspherenotification@gmail.com" > .env
+echo "PASSWORD=wjetifyszgonzumf" >> .env
+npm install
+node server.js```
