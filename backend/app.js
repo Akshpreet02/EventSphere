@@ -2,8 +2,6 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const app = express();
 const cors = require("cors");
-const multer = require("multer");
-const { Event } = require("./db/index.js");
 const mongoose = require('mongoose');
 
 const eventRouter = require("./routes/event")
@@ -27,3 +25,5 @@ const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports = app;
