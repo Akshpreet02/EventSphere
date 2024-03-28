@@ -43,6 +43,17 @@ h1 {
     color: blue;
 }
 
+.forgotPasswordLink {
+    text-align: center;
+}
+
+.forgotPasswordButton {
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 
 .loginButton {
     background-color: #077efd;

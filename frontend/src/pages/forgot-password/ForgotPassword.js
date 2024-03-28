@@ -60,54 +60,55 @@ function ForgotPassword() {
     };
 
     return (
-        <div>
-            <section>
-                <h2>Request Password Reset</h2>
-                <form onSubmit={handleRequestReset}>
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
+        <div className={styles.forgotPasswordBackground}>
+            <div className={styles.forgotPassword}>
+                <section>
+                    <h2>Request Password Reset</h2>
+                    <form onSubmit={handleRequestReset}>
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            />
+                            <button type="submit">Send Reset Code</button>
+                        </form>
+                    </section>
+            
+                    <section>
+                        <h2>Change Password</h2>
+                        <form onSubmit={handleChangePassword}>
+                        <label htmlFor="resetEmail">Email:</label>
+                        <input
+                            type="email"
+                            id="resetEmail"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
-                        <button type="submit">Send Reset Code</button>
+                        <label htmlFor="resetCode">Reset Code:</label>
+                        <input
+                            type="text"
+                            id="resetCode"
+                            value={resetCode}
+                            onChange={(e) => setResetCode(e.target.value)}
+                            required
+                        />
+                        <label htmlFor="newPassword">New Password:</label>
+                        <input
+                            type="password"
+                            id="newPassword"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                        />
+                        <button type="submit">Change Password</button>
                     </form>
                 </section>
-        
-                <section>
-                    <h2>Change Password</h2>
-                    <form onSubmit={handleChangePassword}>
-                    <label htmlFor="resetEmail">Email:</label>
-                    <input
-                        type="email"
-                        id="resetEmail"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                    <label htmlFor="resetCode">Reset Code:</label>
-                    <input
-                        type="text"
-                        id="resetCode"
-                        value={resetCode}
-                        onChange={(e) => setResetCode(e.target.value)}
-                        required
-                    />
-                    <label htmlFor="newPassword">New Password:</label>
-                    <input
-                        type="password"
-                        id="newPassword"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        required
-                    />
-                    <button type="submit">Change Password</button>
-                </form>
-             </section>
-        
-            {message && <p>{message}</p>}
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 }       
