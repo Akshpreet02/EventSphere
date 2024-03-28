@@ -21,6 +21,11 @@
   align-items: flex-start;
   margin: 10px auto;
 }
+
+.create textarea {
+  resize: none;
+  height: 80px;
+}
   
 .checkboxGroup {
   display: flex;
