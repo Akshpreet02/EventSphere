@@ -47,6 +47,11 @@ select {
     color: blue;
 }
 
+select {
+    width: 100%;
+    font-size: 18px;
+}
+
 .signupButton {
     background-color: #077efd;
     color: white;

@@ -233,11 +233,6 @@ function Event() {
                 ? `Date: ${formatDate(eventData.event.start_date)}` 
                 : `Runs from: ${formatDate(eventData.event.start_date)} to ${formatDate(eventData.event.end_date)}`}
           </div>
-          {isLoggedIn && userRole === 'organizer' &&(
-            <div>
-            The number of people that have registered for your event is: {numOfRSVPs}
-          </div>
-          )}
           
           <div className={styles.buttonContainer}>
             { eventData.event.rsvp_required && !isLoggedIn && (
@@ -264,8 +259,15 @@ function Event() {
           </div>
 
           <div className={styles.eventReviewsContainer}>
+            {isLoggedIn && userRole === 'organizer' &&(
+              <h3 style={{textAlign: "center"}}>{numOfRSVPs} people have registered for your event.</h3>
+            )}
             <AddReview eventId={eventId} userID={userID} userRole={userRole}/>
-            <h3>Reviews from other Attendees:</h3>
+            {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer ? (
+              <h3>Reviews for your Event:</h3>
+            ) : (
+              <h3>Reviews from Attendees:</h3>
+            )}
             <ul>
               {eventData.event.reviews.map((review, index) => (
                 <li key={index}>
