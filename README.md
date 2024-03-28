@@ -13,15 +13,19 @@
 [Github link](https://github.com/Akshpreet02/EventSphere)
 
 # How to Start up the App
+Step 1 clone the repo to your local system
 
-Starting up the Front End
+<h2>Starting up the Front End</h2>
+Run these commands in order from top to bottom
+
 ```bash 
 cd frontend
 npm install
 npm run start
 ```
 
-Starting up the Back end
+<h2>Starting up the Back end</h2>
+Run these commands in order from top to bottom
 
 ```bash
 cd backend
