@@ -260,7 +260,9 @@ function Event() {
 
           <div className={styles.eventReviewsContainer}>
             {isLoggedIn && userRole === 'organizer' && userID === eventData.event.organizer && (
-              <h3 style={{textAlign: "center"}}>{numOfRSVPs} people have registered for your event.</h3>
+              <h3 style={{ textAlign: "center" }}>
+                {numOfRSVPs === 1 ? `${numOfRSVPs} person has registered for your event.` : `${numOfRSVPs} people have registered for your event.`}
+              </h3>
             )}
             <AddReview eventId={eventId} userID={userID} userRole={userRole}/>
             {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer ? (
