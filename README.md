@@ -1,14 +1,14 @@
 # SENG 401 Project Report
 | Group 39:       |     |
 | --------------- | --- |
-| Student Names:  |     |
-| Akshpreet Singh |     |
-| Brock Tomlinson |     |
-| Owen Guldberg   |     |
-| Sheikh Sarim    |     |
-| Abdulrahman Abduljabar |     |
-| Rohil Singh Dhillon |     |
-| Shubham Aggarwal |    |
+| Student Names:  |  UCID:   |
+| Akshpreet Singh | 30129354 |
+| Brock Tomlinson | 30142240 |
+| Owen Guldberg   | 30142617 |
+| Sheikh Sarim    | 30143892 |
+| Abdulrahman Abduljabar | 30118353 |
+| Rohil Singh Dhillon | 30139470 |
+| Shubham Aggarwal | 30113383 |
 
 [Github link](https://github.com/Akshpreet02/EventSphere)
 
