@@ -265,7 +265,11 @@ function Event() {
 
           <div className={styles.eventReviewsContainer}>
             <AddReview eventId={eventId} userID={userID} userRole={userRole}/>
-            <h3>Reviews from other Attendees:</h3>
+            {userRole === 'organizer' && isLoggedIn && userID === eventData.event.organizer ? (
+              <h3>Reviews for your Event:</h3>
+            ) : (
+              <h3>Reviews from Attendees:</h3>
+            )}
             <ul>
               {eventData.event.reviews.map((review, index) => (
                 <li key={index}>
